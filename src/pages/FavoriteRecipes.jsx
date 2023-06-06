@@ -3,29 +3,34 @@ import { Link } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import FilterButtons from '../components/FilterButtons';
 
-function DoneRecipes() {
-  const [recipesDone, setRecipesDone] = useState([]);
+function FavoriteRecipes() {
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [showCopy, setShowCopy] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    setRecipesDone(recipes);
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setFavoriteRecipes(favRecipes);
   }, []);
 
   const filterByCategory = (category) => {
     setSelectedCategory(category);
   };
 
+  handleFav = (id) => {
+    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFav));
+  };
+
   return (
     <div>
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
-      <div className="receitas">
-        {recipesDone
+      <div className="favReceitas">
+        {favoriteRecipes
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
             recipe.type === 'meal' ? (
-              // ----------MEAL CARD---------------
+            // ----------MEAL CARD---------------
               <div key={ index }>
                 <Link
                   to={ `/meals/${recipe.id}` }
@@ -40,15 +45,6 @@ function DoneRecipes() {
                 <p data-testid={ `${index}-horizontal-top-text` }>
                   {`${recipe.nationality} - ${recipe.category}`}
                 </p>
-                <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-                {recipe.tags.slice(0, 2).map((tag, indexTag) => (
-                  <p
-                    data-testid={ `${index}-${tag}-horizontal-tag` }
-                    key={ indexTag }
-                  >
-                    {tag}
-                  </p>
-                ))}
                 <button
                   type="button"
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -64,9 +60,16 @@ function DoneRecipes() {
                   <img src="src/images/shareIcon.svg" alt="compartilhar" />
                   {showCopy && 'Link copied!'}
                 </button>
+                <button
+                  type="button"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  onClick={ handleFav(recipe.id) }
+                >
+                  <img src="src/images/blackHeartIcon.svg" alt="desfavoritar" />
+                </button>
               </div>
             ) : (
-              // ----------DRINK CARD---------------
+            // ----------DRINK CARD---------------
               <div key={ index }>
                 <Link
                   to={ `/drinks/${recipe.id}` }
@@ -83,7 +86,6 @@ function DoneRecipes() {
                 >
                   {recipe.alcoholicOrNot}
                 </p>
-                <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
                 <button
                   type="button"
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -99,6 +101,13 @@ function DoneRecipes() {
                   <img src="src/images/shareIcon.svg" alt="compartilhar" />
                   {showCopy && 'Link copied!'}
                 </button>
+                <button
+                  type="button"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  onClick={ handleFav(recipe.id) }
+                >
+                  <img src="src/images/blackHeartIcon.svg" alt="desfavoritar" />
+                </button>
               </div>
             )
           ))}
@@ -107,4 +116,4 @@ function DoneRecipes() {
   );
 }
 
-export default DoneRecipes;
+export default FavoriteRecipes;
