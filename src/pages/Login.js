@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import '../styles/Login.css';
 
 function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
@@ -32,9 +33,9 @@ function Login() {
   };
 
   return (
-    <div>
+    <main className="login">
       <h2>LOGIN</h2>
-      <form>
+      <form className="login-form">
         <input
           type="text"
           placeholder="Email"
@@ -42,6 +43,7 @@ function Login() {
           name="email"
           value={ user.email }
           onChange={ handleChange }
+          className="login-item"
         />
 
         <input
@@ -51,6 +53,7 @@ function Login() {
           name="password"
           value={ user.password }
           onChange={ handleChange }
+          className="login-item"
         />
 
         <button
@@ -58,11 +61,12 @@ function Login() {
           data-testid="login-submit-btn"
           disabled={ buttonStatus }
           onClick={ submitButton }
+          className="login-item"
         >
           ENTER
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 
