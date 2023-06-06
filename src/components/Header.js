@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import '../styles/SearchBar.css';
+import '../styles/Header.css';
 
-function SearchBar({ renderSearchComponent, title }) {
+function Header({ renderSearchComponent, title }) {
   // Estado Inicial
   //   'renderSearchComponent' indica se a barra de busca será exibida ou não.
   //   A barra de busca não será exibida se não for solicitada via props
@@ -52,9 +52,9 @@ function SearchBar({ renderSearchComponent, title }) {
   );
 }
 
-SearchBar.propTypes = {
+Header.propTypes = {
   renderSearchComponent: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
 };
 
-export default SearchBar;
+export default Header;

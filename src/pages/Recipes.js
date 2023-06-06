@@ -1,10 +1,10 @@
-import SearchBar from '../components/SearchBar';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Recipes() {
   return (
     <>
-      <SearchBar renderSearchComponent={ true } title="Meals" />
+      <Header renderSearchComponent={ true } title="Meals" />
       <Footer />
     </>
   );
