@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import DoneRecipes from './pages/DoneRecipes';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
+import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import './App.css';
 
