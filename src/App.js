@@ -4,6 +4,7 @@ import DoneRecipes from './pages/DoneRecipes';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import './App.css';
 
 function App() {
@@ -20,11 +21,7 @@ function App() {
         }
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
-        {
-          /*
-            <Route path="/favorite-recipes" component={ Ranking } />
-          */
-        }
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </div>
 
