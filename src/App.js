@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import DrinkDetails from './pages/DrinkDetails';
+import MealDetails from './pages/MealDetails';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
@@ -14,11 +16,9 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route path="/meals" component={ Recipes } />
-        {
-          /*
-            <Route path="/drinks" component={ Drinks } />
-          */
-        }
+        <Route path="/meals/:id" component={ MealDetails } />
+        <Route path="/drinks" component={ Drinks } />
+        <Route path="/drinks/:id" component={ DrinkDetails } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
