@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function Profile() {
   const emailLocal = localStorage.getItem('user');
@@ -39,6 +40,7 @@ function Profile() {
       >
         Logout
       </button>
+      <Footer />
     </div>
   );
 }
