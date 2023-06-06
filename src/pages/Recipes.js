@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 function Recipes() {
   return (
     <>
-      <Header renderSearchComponent={ true } title="Meals" />
+      <Header renderSearchComponent title="Meals" />
       <Footer />
     </>
   );

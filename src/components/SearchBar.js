@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import '../styles/SearchBar.css';
 
 function SearchBar() {
   const [filterType, setFilterType] = useState('name'); // Estado para armazenar o tipo de filtro selecionado
@@ -107,54 +108,58 @@ function SearchBar() {
   };
 
   return (
-    <form>
-      <label>
+    <form className="search-bar">
+      <div className="search-bar-form-div">
+        <label>
+          <input
+            type="radio"
+            name="filter"
+            value="ingredient"
+            checked={ filterType === 'ingredient' }
+            onChange={ handleFilterChange }
+            data-testid="ingredient-search-radio"
+          />
+          Ingrediente
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="filter"
+            value="name"
+            checked={ filterType === 'name' }
+            onChange={ handleFilterChange }
+            data-testid="name-search-radio"
+          />
+          Nome
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="filter"
+            value="first_letter"
+            checked={ filterType === 'first_letter' }
+            onChange={ handleFilterChange }
+            data-testid="first-letter-search-radio"
+          />
+          Letra
+        </label>
+      </div>
+      <div className="search-bar-form-div">
         <input
-          type="radio"
-          name="filter"
-          value="ingredient"
-          checked={ filterType === 'ingredient' }
-          onChange={ handleFilterChange }
-          data-testid="ingredient-search-radio"
+          type="text"
+          placeholder="Pesquisar"
+          data-testid="search-input"
+          onChange={ handleSearchChange }
+          value={ searchName }
         />
-        Ingrediente
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="filter"
-          value="name"
-          checked={ filterType === 'name' }
-          onChange={ handleFilterChange }
-          data-testid="name-search-radio"
-        />
-        Nome
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="filter"
-          value="first_letter"
-          checked={ filterType === 'first_letter' }
-          onChange={ handleFilterChange }
-          data-testid="first-letter-search-radio"
-        />
-        Letra
-      </label>
-      <input
-        type="text"
-        placeholder="Pesquisar"
-        data-testid="search-input"
-        onChange={ handleSearchChange }
-        value={ searchName }
-      />
-      <button
-        type="button"
-        onClick={ pathname === '/meals' ? handleSearchMeals : handleSearchDrinks }
-        data-testid="exec-search-btn"
-      >
-        Pesquisar
-      </button>
+        <button
+          type="button"
+          onClick={ pathname === '/meals' ? handleSearchMeals : handleSearchDrinks }
+          data-testid="exec-search-btn"
+        >
+          Pesquisar
+        </button>
+      </div>
     </form>
   );
 }
