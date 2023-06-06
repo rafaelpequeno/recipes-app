@@ -1,6 +1,7 @@
 import React from 'react';
-import './App.css';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import './App.css';
+import Profile from './pages/Profile';
 
 function App() {
   return (
