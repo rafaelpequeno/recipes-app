@@ -20,6 +20,8 @@ function DrinkCard() {
               { strDrink }
             </h3>
             <img
+              height="100"
+              width="100"
               src={ strDrinkThumb }
               alt={ strDrink }
               data-testid={ `${index}-card-img` }
