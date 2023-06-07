@@ -1,13 +1,14 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import DrinkDetails from './pages/DrinkDetails';
-import MealDetails from './pages/MealDetails';
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import Recipes from './pages/Recipes';
-import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipes from './pages/FavoriteRecipes';
 import './App.css';
+import DoneRecipes from './pages/DoneRecipes';
+import DrinkDetails from './pages/DrinkDetails';
+import Drinks from './pages/Drinks';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import Login from './pages/Login';
+import MealDetails from './pages/MealDetails';
+import Meals from './pages/Meals';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -15,13 +16,9 @@ function App() {
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/meals" component={ Recipes } />
+        <Route path="/meals" component={ Meals } />
         <Route path="/meals/:id" component={ MealDetails } />
-        {
-          /*
-            <Route path="/drinks" component={ Drinks } />
-          */
-        }
+        <Route path="/drinks" component={ Drinks } />
         <Route path="/drinks/:id" component={ DrinkDetails } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />

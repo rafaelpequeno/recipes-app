@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import copy from 'clipboard-copy';
+// import copy from 'clipboard-copy';
+import React from 'react';
+// import { Link } from 'react-router-dom';
 import FilterButtons from '../components/FilterButtons';
+import Header from '../components/Header';
 
 function DoneRecipes() {
-  const [recipesDone, setRecipesDone] = useState([]);
-  const [showCopy, setShowCopy] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  // const [recipesDone, setRecipesDone] = useState([]);
+  // const [showCopy, setShowCopy] = useState(false);
+  // const [selectedCategory, setSelectedCategory] = useState('');
 
-  useEffect(() => {
-    const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    setRecipesDone(recipes);
-  }, []);
+  // useEffect(() => {
+  //   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   setRecipesDone(recipes);
+  // }, []);
 
-  const filterByCategory = (category) => {
-    setSelectedCategory(category);
-  };
+  // const filterByCategory = (category) => {
+  //   setSelectedCategory(category);
+  // };
 
   return (
     <div>
+      <Header title="Done Recipes" />
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
-      <div className="receitas">
+      {/* <div className="receitas">
         {recipesDone
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
@@ -102,7 +104,7 @@ function DoneRecipes() {
               </div>
             )
           ))}
-      </div>
+      </div> */}
     </div>
   );
 }
