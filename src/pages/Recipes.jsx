@@ -4,25 +4,30 @@ import MealCard from '../components/MealCard';
 import DrinkCard from '../components/DrinkCard';
 import CategoryMealButton from '../components/CategoryMealButton';
 import CategoryDrinkButton from '../components/CategoryDrinkButton';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
 
 function Recipes() {
   const { location: { pathname } } = useHistory();
 
   return (
-    <div>
-      <section>
-        {pathname === '/meals'
+    <>
+    <Header renderSearchComponent title="Meals" />
+      <section>   
+      {pathname === '/meals'
           && <CategoryMealButton />}
         {pathname === '/drinks'
-          && <CategoryDrinkButton />}
+          && <CategoryDrinkButton />
       </section>
-      <section>
+         <section>
         {pathname === '/meals'
           && <MealCard />}
         {pathname === '/drinks'
           && <DrinkCard />}
-      </section>
-    </div>
+        </section>
+      <Footer />
+    </>
   );
 }
 

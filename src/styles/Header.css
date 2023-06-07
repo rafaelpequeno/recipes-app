@@ -1,0 +1,44 @@
+.component-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header {
+  align-items: center;
+  background-color: rgb(110, 28, 8);
+  border-bottom: 1px solid rgb(138, 84, 40);
+  color: rgb(199, 197, 197);
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  word-spacing: 7px;
+}
+
+.app-name {
+  font-style: italic;
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.app-title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header-icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.button-icon {
+  background-color: transparent;
+  border-style: none;
+}
+
+.page-title {
+  background-color: rgb(110, 28, 8);
+  font-style: italic;
+  letter-spacing: 3px;
+  padding: 10px 0;
+  text-align: center;
+}
