@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import myContext from '../context/myContext';
+import '../styles/MealCard.css';
 
 function MealCard() {
   const {
@@ -7,29 +8,28 @@ function MealCard() {
   } = useContext(myContext);
 
   return (
-    <div>
-      <section>
-        {meal12Recipes.map(({ strMeal, strMealThumb }, index) => (
-          <div
-            key={ index }
-            data-testid={ `${index}-recipe-card` }
+    <section className="meal-list">
+      {meal12Recipes.map(({ strMeal, strMealThumb }, index) => (
+        <div
+          key={ index }
+          data-testid={ `${index}-recipe-card` }
+          className="recipe-card"
+        >
+          <h3
+            data-testid={ `${index}-card-name` }
+            className="recipe-card-title"
           >
-            <h3
-              data-testid={ `${index}-card-name` }
-            >
-              { strMeal }
-            </h3>
-            <img
-              height="100"
-              width="100"
-              src={ strMealThumb }
-              alt={ strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-          </div>
-        ))}
-      </section>
-    </div>
+            { strMeal }
+          </h3>
+          <img
+            src={ strMealThumb }
+            alt={ strMeal }
+            data-testid={ `${index}-card-img` }
+            className="recipe-card-picture"
+          />
+        </div>
+      ))}
+    </section>
   );
 }
 
