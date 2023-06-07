@@ -3,13 +3,13 @@ import myContext from '../context/myContext';
 
 function DrinkCard() {
   const {
-    drink12Recipes,
+    filteredDrinks,
   } = useContext(myContext);
 
   return (
     <div>
       <section>
-        {drink12Recipes.map(({ strDrink, strDrinkThumb }, index) => (
+        {filteredDrinks.map(({ strDrink, strDrinkThumb }, index) => (
           <div
             key={ index }
             data-testid={ `${index}-recipe-card` }

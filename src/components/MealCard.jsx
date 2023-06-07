@@ -3,13 +3,13 @@ import myContext from '../context/myContext';
 
 function MealCard() {
   const {
-    meal12Recipes,
+    filteredMeals,
   } = useContext(myContext);
 
   return (
     <div>
       <section>
-        {meal12Recipes.map(({ strMeal, strMealThumb }, index) => (
+        {filteredMeals.map(({ strMeal, strMealThumb }, index) => (
           <div
             key={ index }
             data-testid={ `${index}-recipe-card` }
