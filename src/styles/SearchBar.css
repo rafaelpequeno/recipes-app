@@ -1,12 +1,12 @@
 .search-bar {
   background-color: rgb(138, 84, 40);
-  border: 0px solid rgb(138, 84, 40);
+  border: 0 solid rgb(138, 84, 40);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   font-size: 15px;
-  padding: 10px;
   margin: 10px auto;
+  padding: 10px;
   width: 80vw;
 }
 
