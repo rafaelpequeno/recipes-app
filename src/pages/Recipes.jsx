@@ -8,14 +8,14 @@ import Footer from '../components/Footer';
 function Recipes() {
   const { location: { pathname } } = useHistory();
   return (
-    <div>
+    <>
       <Header renderSearchComponent title="Meals" />
       {pathname === '/meals'
           && <MealCard />}
       {pathname === '/drinks'
           && <DrinkCard />}
       <Footer />
-    </div>
+    </>
   );
 }
 
