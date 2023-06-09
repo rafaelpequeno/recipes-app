@@ -1,7 +1,7 @@
 .meal-list {
   display: flex;
+  flex-flow: wrap;
   flex-direction: row;
-  flex-wrap: wrap;
 }
 
 .recipe-card {
@@ -14,6 +14,6 @@
 }
 
 .recipe-card-picture {
-  width: 42vw;
   padding: 0 4px;
+  width: 42vw;
 }

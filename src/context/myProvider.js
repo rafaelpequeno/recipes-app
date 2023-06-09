@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useState } from 'react';
-import myContext from './myContext';
-import { mealAPI } from '../services/mealAPI';
 import { drinkAPI } from '../services/drinkAPI';
+import { mealAPI } from '../services/mealAPI';
+import myContext from './myContext';
 
 function Provider({ children }) {
   const [mealRecipes, setMealRecipes] = useState([]);
@@ -40,12 +40,16 @@ function Provider({ children }) {
       meal12Recipes,
       drinkRecipes,
       drink12Recipes,
+      setMeal12Recipes,
+      setDrink12Recipes,
     }),
     [
       mealRecipes,
       meal12Recipes,
       drinkRecipes,
       drink12Recipes,
+      setMeal12Recipes,
+      setDrink12Recipes,
     ],
   );
 
