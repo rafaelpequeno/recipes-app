@@ -13,7 +13,6 @@ function renderWithRouterAndContext(component, path = '/') {
         <Router history={ history }>
           {component}
         </Router>
-        ,
       </Provider>,
     ),
     history,

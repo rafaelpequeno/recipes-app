@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useState } from 'react';
-import myContext from './myContext';
-import { mealAPI } from '../services/mealAPI';
 import { drinkAPI } from '../services/drinkAPI';
+
+import { mealAPI } from '../services/mealAPI';
+import myContext from './myContext';
+
 import mealCategoryAPI from '../services/mealCategoryAPI';
 import drinkCategoryAPI from '../services/drinkCategoryAPI';
+
 
 function Provider({ children }) {
   const [mealRecipes, setMealRecipes] = useState([]);
@@ -65,6 +68,9 @@ function Provider({ children }) {
       mealRecipes,
       setMealRecipes,
       drinkRecipes,
+      drink12Recipes,
+      setMeal12Recipes,
+      setDrink12Recipes,
       categoryMeal,
       setCategoryMeal,
       meal5Category,
@@ -77,11 +83,15 @@ function Provider({ children }) {
       setFilteredMeals,
       filteredDrinks,
       setFilteredDrinks,
+
     }),
     [
       mealRecipes,
       setMealRecipes,
       drinkRecipes,
+      drink12Recipes,
+      setMeal12Recipes,
+      setDrink12Recipes,
       categoryMeal,
       setCategoryMeal,
       meal5Category,
