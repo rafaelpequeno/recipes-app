@@ -7,19 +7,27 @@ function CategoryDrinkButton() {
   const {
     drink5Category,
     setFilteredDrinks,
+    filterOnOff,
+    setFilterOnOff,
   } = useContext(myContext);
-
-  const handleCLick = async (e) => {
-    const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e}`;
-    const fetchCategory = await dinamicDrinkCategory(URL);
-    const recipes12 = 12;
-    setFilteredDrinks((fetchCategory.filter((_drink, index) => index < recipes12)));
-  };
 
   const handleAllBtn = async () => {
     const fetchDrinks = await drinkAPI();
     const recipes12 = 12;
     setFilteredDrinks((fetchDrinks.filter((_drink, index) => index < recipes12)));
+  };
+
+  const handleCLick = async (e) => {
+    if (filterOnOff) {
+      const URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e}`;
+      const fetchCategory = await dinamicDrinkCategory(URL);
+      const recipes12 = 12;
+      setFilteredDrinks((fetchCategory.filter((_drink, index) => index < recipes12)));
+      setFilterOnOff(false);
+    } else {
+      await handleAllBtn();
+      setFilterOnOff(true);
+    }
   };
 
   return (
