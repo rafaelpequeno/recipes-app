@@ -1,31 +1,33 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import MealCard from '../components/MealCard';
-import DrinkCard from '../components/DrinkCard';
-import CategoryMealButton from '../components/CategoryMealButton';
 import CategoryDrinkButton from '../components/CategoryDrinkButton';
-import Header from '../components/Header';
+import CategoryMealButton from '../components/CategoryMealButton';
+import DrinkCard from '../components/DrinkCard';
 import Footer from '../components/Footer';
-
+import Header from '../components/Header';
+import MealCard from '../components/MealCard';
 
 function Recipes() {
   const { location: { pathname } } = useHistory();
 
   return (
     <>
-    <Header renderSearchComponent title="Meals" />
-      <section>   
-      {pathname === '/meals'
-          && <CategoryMealButton />}
+      <section>
+        { pathname === '/meals'
+            && (
+              <div>
+                <Header renderSearchComponent title="Meals" />
+                <CategoryMealButton />
+                <MealCard />
+              </div>)}
         {pathname === '/drinks'
-          && <CategoryDrinkButton />
+          && (
+            <>
+              <Header renderSearchComponent title="Drinks" />
+              <CategoryDrinkButton />
+              <DrinkCard />
+            </>)}
       </section>
-         <section>
-        {pathname === '/meals'
-          && <MealCard />}
-        {pathname === '/drinks'
-          && <DrinkCard />}
-        </section>
       <Footer />
     </>
   );

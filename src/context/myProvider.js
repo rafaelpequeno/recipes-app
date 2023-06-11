@@ -5,9 +5,8 @@ import { drinkAPI } from '../services/drinkAPI';
 import { mealAPI } from '../services/mealAPI';
 import myContext from './myContext';
 
-import mealCategoryAPI from '../services/mealCategoryAPI';
 import drinkCategoryAPI from '../services/drinkCategoryAPI';
-
+import mealCategoryAPI from '../services/mealCategoryAPI';
 
 function Provider({ children }) {
   const [mealRecipes, setMealRecipes] = useState([]);
@@ -22,6 +21,8 @@ function Provider({ children }) {
 
   const [filteredMeals, setFilteredMeals] = useState([{}]);
   const [filteredDrinks, setFilteredDrinks] = useState([{}]);
+
+  const [filterOnOff, setFilterOnOff] = useState(true);
 
   const requestMealAPI = async () => {
     const fetchMeals = await mealAPI();
@@ -68,9 +69,6 @@ function Provider({ children }) {
       mealRecipes,
       setMealRecipes,
       drinkRecipes,
-      drink12Recipes,
-      setMeal12Recipes,
-      setDrink12Recipes,
       categoryMeal,
       setCategoryMeal,
       meal5Category,
@@ -83,15 +81,13 @@ function Provider({ children }) {
       setFilteredMeals,
       filteredDrinks,
       setFilteredDrinks,
-
+      filterOnOff,
+      setFilterOnOff,
     }),
     [
       mealRecipes,
       setMealRecipes,
       drinkRecipes,
-      drink12Recipes,
-      setMeal12Recipes,
-      setDrink12Recipes,
       categoryMeal,
       setCategoryMeal,
       meal5Category,
@@ -104,6 +100,8 @@ function Provider({ children }) {
       setFilteredMeals,
       filteredDrinks,
       setFilteredDrinks,
+      filterOnOff,
+      setFilterOnOff,
     ],
   );
 

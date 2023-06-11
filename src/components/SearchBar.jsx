@@ -17,7 +17,7 @@ import '../styles/SearchBar.css';
 function SearchBar() {
   const [filterType, setFilterType] = useState('name'); // Estado para armazenar o tipo de filtro selecionado
   const [searchName, setSearchName] = useState(''); // Estado para armazenar o valor de pesquisa
-  const { setMeal12Recipes, setDrink12Recipes } = useContext(myContext);
+  const { setFilteredMeals, setFilteredDrinks } = useContext(myContext);
   const location = useLocation();
   const { pathname } = location;
   const history = useHistory();
@@ -37,7 +37,7 @@ function SearchBar() {
         history.push(`/meals/${fetch[0].idMeal}`);
       } else {
         const recipes12 = 12;
-        setMeal12Recipes((fetch.filter((_meal, index) => index < recipes12)));
+        setFilteredMeals((fetch.filter((_meal, index) => index < recipes12)));
       }
     } else {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -51,7 +51,7 @@ function SearchBar() {
         history.push(`/drinks/${fetch[0].idDrink}`);
       } else {
         const recipes12 = 12;
-        setDrink12Recipes((fetch.filter((_drink, index) => index < recipes12)));
+        setFilteredDrinks((fetch.filter((_drink, index) => index < recipes12)));
       }
     } else {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
