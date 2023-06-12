@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile() {
-  const emailLocal = JSON.parse(localStorage.getItem('user'));
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    setEmail(JSON.parse(localStorage.getItem('user')));
+  }, []);
+
   const history = useHistory();
 
   const goToDoneRecipes = () => {
@@ -24,18 +29,18 @@ function Profile() {
     <div>
       <Header title="Profile" />
 
-      <span data-testid="profile-email">{emailLocal.email}</span>
+      <p data-testid="profile-email">{email.email}</p>
       <button
         data-testid="profile-done-btn"
         onClick={ goToDoneRecipes }
       >
-        Done recipes
+        Done Recipes
       </button>
       <button
         data-testid="profile-favorite-btn"
         onClick={ goToFavoriteRecipes }
       >
-        Favorite recipes
+        Favorite Recipes
       </button>
       <button
         data-testid="profile-logout-btn"
