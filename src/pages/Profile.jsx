@@ -1,9 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 function Profile() {
-  const emailLocal = localStorage.getItem('user');
+  const emailLocal = JSON.parse(localStorage.getItem('user'));
   const history = useHistory();
 
   const goToDoneRecipes = () => {
@@ -21,7 +22,9 @@ function Profile() {
 
   return (
     <div>
-      <span data-testid="profile-email">{emailLocal}</span>
+      <Header title="Profile" />
+
+      <span data-testid="profile-email">{emailLocal.email}</span>
       <button
         data-testid="profile-done-btn"
         onClick={ goToDoneRecipes }
@@ -40,6 +43,7 @@ function Profile() {
       >
         Logout
       </button>
+
       <Footer />
     </div>
   );

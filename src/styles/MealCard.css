@@ -1,0 +1,19 @@
+.meal-list {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: row;
+}
+
+.recipe-card {
+  background-color: rgb(200, 148, 106);
+  margin: 3px 5px;
+}
+
+.recipe-card-title {
+  font-size: 11px;
+}
+
+.recipe-card-picture {
+  padding: 0 4px;
+  width: 42vw;
+}

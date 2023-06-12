@@ -1,3 +1,8 @@
+.component-header {
+  display: flex;
+  flex-direction: column;
+}
+
 .main-header {
   align-items: center;
   background-color: rgb(110, 28, 8);
@@ -23,6 +28,11 @@
 .header-icon {
   cursor: pointer;
   margin-right: 10px;
+}
+
+.button-icon {
+  background-color: transparent;
+  border-style: none;
 }
 
 .page-title {
