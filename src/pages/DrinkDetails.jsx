@@ -1,30 +1,44 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 
 function DrinkDetails() {
   const [drinkDetails, setDrinkDetails] = useState([]);
+  const [mealDetails, setMealDetails] = useState([]);
 
   const { drinks } = drinkDetails;
+  const { meals } = mealDetails;
 
   const { id } = useParams();
 
-  const imageRef = useRef(null);
+  const carouselLength = 6;
 
   useEffect(() => {
     const apiData = async () => {
-      console.log(id);
       const drinkData = await fetchRecipeDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
       setDrinkDetails(drinkData);
+
+      const mealData = await fetchRecipeDetails('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      setMealDetails(mealData);
     };
     apiData();
   }, [id]);
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+  };
+
   return (
     <div>
-      {drinks && (
+      {drinks && meals && (
         <div>
           <img
-            ref={ imageRef }
             src={ drinks[0].strDrinkThumb }
             alt="Imagem da Receita"
             width="150"
@@ -51,7 +65,36 @@ function DrinkDetails() {
               })}
           </ul>
           <p data-testid="instructions">{drinks[0].strInstructions}</p>
-          {console.log(drinks[0])}
+          <span>
+            <h2>Recommended</h2>
+            <Slider { ...settings }>
+              {meals
+                .slice(0, carouselLength)
+                .map((meal, index) => (
+                  <div
+                    key={ meal.idMeal }
+                    data-testid={ `${index}-recommendation-card` }
+                  >
+
+                    <span>
+                      <img
+                        className="d-block w-100"
+                        src={ meal.strMealThumb }
+                        alt="Recipe thumb"
+                        width="140"
+                      />
+                      <h3
+                        data-testid={ `${index}-recommendation-title` }
+                      >
+                        {meal.strMeal}
+
+                      </h3>
+                    </span>
+                  </div>
+                ))}
+            </Slider>
+
+          </span>
         </div>)}
     </div>
   );

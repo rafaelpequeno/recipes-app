@@ -1,37 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 
 function MealDetails() {
   const [mealDetails, setMealDetails] = useState([]);
-  // const [drinkDetails, setDrinkDetails] = useState([]);
+  const [drinkDetails, setDrinkDetails] = useState([]);
 
   const { meals } = mealDetails;
-  // const { drinks } = drinkDetails;
+  const { drinks } = drinkDetails;
 
   const { id } = useParams();
 
-  const imageRef = useRef(null);
+  const carouselLength = 6;
 
   const updateLink = (oldLink) => oldLink.replace('watch', 'embed').replace(/\?v=/g, '/');
 
   useEffect(() => {
     const apiData = async () => {
-      console.log(id);
       const mealData = await fetchRecipeDetails(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
       setMealDetails(mealData);
 
-      // const drinkData = await fetchRecipeDetails('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-      // setDrinkDetails(drinkData);
+      const drinkData = await fetchRecipeDetails('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      setDrinkDetails(drinkData);
     };
     apiData();
   }, [id]);
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+  };
+
   return (
     <div>
-      {meals && (
+      {meals && drinks && (
         <div>
           <img
-            ref={ imageRef }
             src={ meals[0].strMealThumb }
             alt="Imagem da Receita"
             width="150"
@@ -67,7 +76,37 @@ function MealDetails() {
             allow="accelerometer"
             allowFullScreen
           />
-          {console.log(meals[0])}
+          <span>
+            <h2>Recommended</h2>
+            <Slider { ...settings }>
+              {drinks
+                // .slice(0, carouselLength)
+                .filter((_drink, index) => index < carouselLength)
+                .map((drink, index) => (
+                  <div
+                    key={ drink.idDrink }
+                    data-testid={ `${index}-recommendation-card` }
+                  >
+
+                    <span>
+                      <img
+                        className="d-block w-100"
+                        src={ drink.strDrinkThumb }
+                        alt="Recipe thumb"
+                        width="140"
+                      />
+                      <h3
+                        data-testid={ `${index}-recommendation-title` }
+                      >
+                        {drink.strDrink}
+
+                      </h3>
+                    </span>
+                  </div>
+                ))}
+            </Slider>
+
+          </span>
         </div>)}
     </div>
   );
