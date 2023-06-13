@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import '../styles/StartRecipeBTN.css';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 
 function DrinkDetails() {
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [mealDetails, setMealDetails] = useState([]);
+  const [doneRecipe, setDoneRecipe] = useState('');
+  const [btnText, setBTNText] = useState('');
 
   const { drinks } = drinkDetails;
   const { meals } = mealDetails;
@@ -15,6 +18,8 @@ function DrinkDetails() {
   const { id } = useParams();
 
   const carouselLength = 6;
+
+  const history = useHistory();
 
   useEffect(() => {
     const apiData = async () => {
@@ -24,7 +29,24 @@ function DrinkDetails() {
       const mealData = await fetchRecipeDetails('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       setMealDetails(mealData);
     };
+
+    const verifyRecipe = () => {
+      const data = JSON.parse(localStorage.getItem('doneRecipes'));
+      const verification = data !== null ? data
+        .some((recipe) => recipe.id === Number(id)) : false;
+      setDoneRecipe(verification);
+    };
+
+    const verifyBTNText = () => {
+      const data = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const verification = data !== null ? Object.entries(data.drinks)
+        .some((e) => e[0] === id) : false;
+      setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
+    };
+
     apiData();
+    verifyRecipe();
+    verifyBTNText();
   }, [id]);
 
   const settings = {
@@ -95,6 +117,16 @@ function DrinkDetails() {
             </Slider>
 
           </span>
+          {!doneRecipe && (
+            <button
+              className="startRecipe"
+              data-testid="start-recipe-btn"
+              onClick={ () => history.push(`/drinks/${id}/in-progress`) }
+            >
+              {btnText}
+            </button>)}
+          <button data-testid="share-btn">Share</button>
+          <button data-testid="favorite-btn">Favorite</button>
         </div>)}
     </div>
   );
