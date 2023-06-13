@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/StartRecipeBTN.css';
+import '../styles/MealDetails.css';
 
 function MealDetails() {
   const [mealDetails, setMealDetails] = useState([]);
@@ -61,34 +62,56 @@ function MealDetails() {
   return (
     <div>
       {meals && drinks && (
-        <div>
-          <img
-            src={ meals[0].strMealThumb }
-            alt="Imagem da Receita"
-            width="150"
-            data-testid="recipe-photo"
-          />
-          <h1 data-testid="recipe-title">{ meals[0].strMeal }</h1>
-          <p data-testid="recipe-category">{ meals[0].strCategory }</p>
-          <h2>Ingredients</h2>
-          <ul>
-            {Object.entries(meals[0])
-              .filter(([key]) => key.startsWith('strIngredient') && meals[0][key])
-              .map(([key, value], index) => {
-                const IngredientsKey = key.replace('strIngredient', 'strMeasure');
-                const quantity = meals[0][IngredientsKey];
-                const ingredientWithQuantity = `${quantity} ${value}`;
-                return (
-                  <li
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                    key={ key }
-                  >
-                    {ingredientWithQuantity}
-                  </li>
-                );
-              })}
-          </ul>
-          <p data-testid="instructions">{meals[0].strInstructions}</p>
+        <div className="meals-details">
+          <div className="meals-details-header">
+            <img
+              src={ meals[0].strMealThumb }
+              alt="Imagem da Receita"
+              width="150"
+              data-testid="recipe-photo"
+              className="meals-details-picture"
+            />
+            <div className="meals-details-title-area">
+              <h1
+                data-testid="recipe-title"
+                className="meals-details-title"
+              >
+                { meals[0].strMeal }
+              </h1>
+            </div>
+          </div>
+          <p
+            data-testid="recipe-category"
+            className="meals-details-tag"
+          >
+            { meals[0].strCategory }
+          </p>
+          <div className="meals-details-ingredients">
+            <h2 className="meals-details-h2-title">Ingredients</h2>
+            <ul>
+              {Object.entries(meals[0])
+                .filter(([key]) => key.startsWith('strIngredient') && meals[0][key])
+                .map(([key, value], index) => {
+                  const IngredientsKey = key.replace('strIngredient', 'strMeasure');
+                  const quantity = meals[0][IngredientsKey];
+                  const ingredientWithQuantity = `${quantity} ${value}`;
+                  return (
+                    <li
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                      key={ key }
+                    >
+                      {ingredientWithQuantity}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+          <p
+            data-testid="instructions"
+            className="meals-details-instructions"
+          >
+            {meals[0].strInstructions}
+          </p>
           <iframe
             data-testid="video"
             width="560"
@@ -97,9 +120,10 @@ function MealDetails() {
             title="YouTube video player"
             allow="accelerometer"
             allowFullScreen
+            className="meals-details-video"
           />
-          <span>
-            <h2>Recommended</h2>
+          <span className="meals-details-carousel">
+            <h2 className="meals-details-h2-title">Recommended</h2>
             <Slider { ...settings }>
               {drinks
                 // .slice(0, carouselLength)
@@ -109,10 +133,9 @@ function MealDetails() {
                     key={ drink.idDrink }
                     data-testid={ `${index}-recommendation-card` }
                   >
-
                     <span>
                       <img
-                        className="d-block w-100"
+                        className="d-block w-100 meals-details-picture-carousel"
                         src={ drink.strDrinkThumb }
                         alt="Recipe thumb"
                         width="140"
@@ -121,7 +144,6 @@ function MealDetails() {
                         data-testid={ `${index}-recommendation-title` }
                       >
                         {drink.strDrink}
-
                       </h3>
                     </span>
                   </div>
