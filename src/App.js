@@ -6,12 +6,12 @@ import DrinkDetails from './pages/DrinkDetails';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Login from './pages/Login';
 import MealDetails from './pages/MealDetails';
+import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
 
 function App() {
   return (
-
     <div>
       <Switch>
         <Route exact path="/" component={ Login } />
@@ -24,7 +24,6 @@ function App() {
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </div>
-
   );
 }
 

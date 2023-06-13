@@ -9,32 +9,32 @@ function MealCard() {
   } = useContext(myContext);
 
   return (
-    <div>
-      <section className="meal-list">
-        {filteredMeals.map(({ strMeal, strMealThumb, idMeal }, index) => (
-          <Link key={ index } to={ `/meals/${idMeal}` }>
-            <div
-              data-testid={ `${index}-recipe-card` }
-              className="recipe-card"
+    <section className="meal-list">
+      {filteredMeals.map(({ strMeal, strMealThumb, idMeal }, index) => (
+        <Link
+          key={ index }
+          to={ `/meals/${idMeal}` }
+          className="recipe-card"
+        >
+          <div
+            data-testid={ `${index}-recipe-card` }
+          >
+            <h3
+              data-testid={ `${index}-card-name` }
+              className="recipe-card-title"
             >
-              <h3
-                data-testid={ `${index}-card-name` }
-                className="recipe-card-title"
-              >
-                { strMeal }
-              </h3>
-              <img
-                src={ strMealThumb }
-                alt={ strMeal }
-                data-testid={ `${index}-card-img` }
-                className="recipe-card-picture"
-              />
-            </div>
-          </Link>
-
-        ))}
-      </section>
-    </div>
+              { strMeal }
+            </h3>
+            <img
+              src={ strMealThumb }
+              alt={ strMeal }
+              data-testid={ `${index}-card-img` }
+              className="recipe-card-picture"
+            />
+          </div>
+        </Link>
+      ))}
+    </section>
   );
 }
 
