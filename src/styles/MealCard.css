@@ -2,18 +2,27 @@
   display: flex;
   flex-flow: wrap;
   flex-direction: row;
+  margin-left: 4px;
 }
 
 .recipe-card {
   background-color: rgb(200, 148, 106);
+  border: 0 solid rgb(200, 148, 106);
+  border-radius: 8px;
   margin: 3px 5px;
+  text-decoration: none;
 }
 
 .recipe-card-title {
+  color: rgb(110, 28, 8);
   font-size: 11px;
+  height: 42px;
+  margin-left: 5px;
+  max-width: 157px;
 }
 
 .recipe-card-picture {
+  max-width: 159px;
   padding: 0 4px;
-  width: 42vw;
+  width: 44vw;
 }

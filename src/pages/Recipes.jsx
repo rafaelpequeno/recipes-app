@@ -12,22 +12,20 @@ function Recipes() {
 
   return (
     <>
-      <section>
-        { pathname === '/meals'
-            && (
-              <div>
-                <Header renderSearchComponent title="Meals" />
-                <CategoryMealButton />
-                <MealCard />
-              </div>)}
-        {pathname === '/drinks'
-          && (
-            <>
-              <Header renderSearchComponent title="Drinks" />
-              <CategoryDrinkButton />
-              <DrinkCard />
-            </>)}
-      </section>
+      { pathname === '/meals'
+        && (
+          <>
+            <Header renderSearchComponent title="Meals" />
+            <CategoryMealButton />
+            <MealCard />
+          </>)}
+      { pathname === '/drinks'
+        && (
+          <>
+            <Header renderSearchComponent title="Drinks" />
+            <CategoryDrinkButton />
+            <DrinkCard />
+          </>)}
       <Footer />
     </>
   );
