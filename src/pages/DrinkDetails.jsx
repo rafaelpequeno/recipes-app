@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import myContext from '../context/myContext';
+import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/StartRecipeBTN.css';
 import clipboardCopy from 'clipboard-copy';
-import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import shareIcon from '../images/shareIcon.svg';
 import filledHeart from '../images/blackHeartIcon.svg';
 import emptyHeart from '../images/whiteHeartIcon.svg';
 
 function DrinkDetails() {
-  const [drinkDetails, setDrinkDetails] = useState([]);
-  const [mealDetails, setMealDetails] = useState([]);
-  const [doneRecipe, setDoneRecipe] = useState('');
-  const [btnText, setBTNText] = useState('');
+  const { mealDetails,
+    setMealDetails,
+    drinkDetails,
+    setDrinkDetails,
+    doneRecipe,
+    setDoneRecipe,
+    btnText,
+    setBTNText } = useContext(myContext);
+
   const [textToCopy, setTextToCopy] = useState('');
   const [CopyMessage, setCopyMessage] = useState(false);
   const [favoriteIcon, setFavoriteIcon] = useState(false);
