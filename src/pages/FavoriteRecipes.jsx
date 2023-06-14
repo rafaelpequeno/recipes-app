@@ -12,7 +12,7 @@ function FavoriteRecipes() {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setFavoriteRecipes(favRecipes);
   }, []);
 
@@ -21,8 +21,9 @@ function FavoriteRecipes() {
   };
 
   const handleFav = (id) => {
-    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(...newFav));
+    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id) || [];
+    setFavoriteRecipes(newFav);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([...newFav]));
   };
 
   const handleCopy = (type, id) => {
@@ -56,6 +57,9 @@ function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt="imgreceita"
+                    aria-hidden="true"
+                    width="100"
+                    style={ { padding: '5px', display: 'flex' } }
                   />
                   <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
@@ -72,13 +76,15 @@ function FavoriteRecipes() {
                   style={ { padding: '5px', display: 'flex' } }
                 />
                 {showCopy && <p data-testid="linkmsg">Link copied!</p>}
-                <button
-                  type="button"
+                <img
+                  src={ blackHeart }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   onClick={ () => handleFav(recipe.id) }
-                >
-                  <img src={ blackHeart } alt="desfavoritar" />
-                </button>
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
               </div>
             ) : (
             // ----------DRINK CARD---------------
@@ -90,6 +96,9 @@ function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt="imgreceita"
+                    aria-hidden="true"
+                    width="100"
+                    style={ { padding: '5px', display: 'flex' } }
                   />
                   <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
@@ -108,13 +117,15 @@ function FavoriteRecipes() {
                   style={ { padding: '5px', display: 'flex' } }
                 />
                 {showCopy && <p data-testid="linkmsg">Link copied!</p>}
-                <button
-                  type="button"
+                <img
+                  src={ blackHeart }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   onClick={ () => handleFav(recipe.id) }
-                >
-                  <img src={ blackHeart } alt="desfavoritar" />
-                </button>
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
               </div>
             )
           ))}
