@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../styles/StartRecipeBTN.css';
+import 'slick-carousel/slick/slick.css';
+import myContext from '../context/myContext';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
+import '../styles/StartRecipeBTN.css';
 
 function DrinkDetails() {
-  const [drinkDetails, setDrinkDetails] = useState([]);
-  const [mealDetails, setMealDetails] = useState([]);
-  const [doneRecipe, setDoneRecipe] = useState('');
-  const [btnText, setBTNText] = useState('');
+  const { mealDetails,
+    setMealDetails,
+    drinkDetails,
+    setDrinkDetails,
+    doneRecipe,
+    setDoneRecipe,
+    btnText,
+    setBTNText } = useContext(myContext);
 
   const { drinks } = drinkDetails;
   const { meals } = mealDetails;

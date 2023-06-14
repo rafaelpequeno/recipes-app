@@ -24,6 +24,12 @@ function Provider({ children }) {
 
   const [filterOnOff, setFilterOnOff] = useState(true);
 
+  // mealDetails e drinkDetails
+  const [mealDetails, setMealDetails] = useState([]);
+  const [drinkDetails, setDrinkDetails] = useState([]);
+  const [doneRecipe, setDoneRecipe] = useState('');
+  const [btnText, setBTNText] = useState('');
+
   const requestMealAPI = async () => {
     const fetchMeals = await mealAPI();
     setMealRecipes(fetchMeals);
@@ -83,6 +89,14 @@ function Provider({ children }) {
       setFilteredDrinks,
       filterOnOff,
       setFilterOnOff,
+      mealDetails,
+      setMealDetails,
+      drinkDetails,
+      setDrinkDetails,
+      doneRecipe,
+      setDoneRecipe,
+      btnText,
+      setBTNText,
     }),
     [
       mealRecipes,
@@ -102,6 +116,14 @@ function Provider({ children }) {
       setFilteredDrinks,
       filterOnOff,
       setFilterOnOff,
+      mealDetails,
+      setMealDetails,
+      drinkDetails,
+      setDrinkDetails,
+      doneRecipe,
+      setDoneRecipe,
+      btnText,
+      setBTNText,
     ],
   );
 
