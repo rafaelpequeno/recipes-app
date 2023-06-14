@@ -1,33 +1,49 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
-// import copy from 'clipboard-copy';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import FilterButtons from '../components/FilterButtons';
 import Header from '../components/Header';
+import shareIcon from '../images/shareIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
 
 function FavoriteRecipes() {
-  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-  // const [showCopy, setShowCopy] = useState(false);
-  // const [selectedCategory, setSelectedCategory] = useState('');
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [showCopy, setShowCopy] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
-  // useEffect(() => {
-  //   const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  //   setFavoriteRecipes(favRecipes);
-  // }, []);
+  useEffect(() => {
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setFavoriteRecipes(favRecipes);
+  }, []);
 
-  // const filterByCategory = (category) => {
-  //   setSelectedCategory(category);
-  // };
+  const filterByCategory = (category) => {
+    setSelectedCategory(category);
+  };
 
-  // handleFav = (id) => {
-  //   const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
-  //   localStorage.setItem('favoriteRecipes', JSON.stringify(newFav));
-  // };
+  const handleFav = (id) => {
+    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(...newFav));
+  };
+
+  const handleCopy = (type, id) => {
+    setShowCopy(true);
+    if (type === 'meals') {
+      clipboardCopy(`http://localhost:3000/meals/${id}`);
+    } else if (type === 'drinks') {
+      clipboardCopy(`http://localhost:3000/drinks/${id}`);
+    }
+
+    const seconds = 2000;
+    setTimeout(() => {
+      setShowCopy(false);
+    }, seconds);
+  };
 
   return (
     <div>
       <Header title="Favorite Recipes" />
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
-      {/* <div className="favReceitas">
+      <div className="favReceitas">
         {favoriteRecipes
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
@@ -47,27 +63,22 @@ function FavoriteRecipes() {
                 <p data-testid={ `${index}-horizontal-top-text` }>
                   {`${recipe.nationality} - ${recipe.category}`}
                 </p>
-                <button
-                  type="button"
+                <img
+                  src={ shareIcon }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => {
-                    const destinationUrl = window.location.href
-                      .split(window.location.pathname)[0]
-                  + (recipe.type === 'meal'
-                    ? `/meals/${recipe.id}`
-                    : `/drinks/${recipe.id}`);
-                    copy(destinationUrl).then(() => { setShowCopy(true); });
-                  } }
-                >
-                  <img src={ shareIcon } alt="compartilhar" />
-                  {showCopy && 'Link copied!'}
-                </button>
+                  onClick={ () => handleCopy('meals', recipe.id) }
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
+                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
                 <button
                   type="button"
                   data-testid={ `${index}-horizontal-favorite-btn` }
-                  onClick={ handleFav(recipe.id) }
+                  onClick={ () => handleFav(recipe.id) }
                 >
-                  <img src="src/images/blackHeartIcon.svg" alt="desfavoritar" />
+                  <img src={ blackHeart } alt="desfavoritar" />
                 </button>
               </div>
             ) : (
@@ -88,32 +99,27 @@ function FavoriteRecipes() {
                 >
                   {recipe.alcoholicOrNot}
                 </p>
-                <button
-                  type="button"
+                <img
+                  src={ shareIcon }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => {
-                    const destinationUrl = window.location.href
-                      .split(window.location.pathname)[0]
-                  + (recipe.type === 'meal'
-                    ? `/meals/${recipe.id}`
-                    : `/drinks/${recipe.id}`);
-                    copy(destinationUrl).then(() => { setShowCopy(true); });
-                  } }
-                >
-                  <img src={ shareIcon } alt="compartilhar" />
-                  {showCopy && 'Link copied!'}
-                </button>
+                  onClick={ () => handleCopy('meals', recipe.id) }
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
+                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
                 <button
                   type="button"
                   data-testid={ `${index}-horizontal-favorite-btn` }
-                  onClick={ handleFav(recipe.id) }
+                  onClick={ () => handleFav(recipe.id) }
                 >
-                  <img src="src/images/blackHeartIcon.svg" alt="desfavoritar" />
+                  <img src={ blackHeart } alt="desfavoritar" />
                 </button>
               </div>
             )
           ))}
-      </div> */}
+      </div>
     </div>
   );
 }
