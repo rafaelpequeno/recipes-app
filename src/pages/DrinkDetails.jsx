@@ -10,6 +10,7 @@ import '../styles/StartRecipeBTN.css';
 import shareIcon from '../images/shareIcon.svg';
 import filledHeart from '../images/blackHeartIcon.svg';
 import emptyHeart from '../images/whiteHeartIcon.svg';
+import '../styles/DrinkDetails.css';
 
 function DrinkDetails() {
   const { mealDetails,
@@ -119,36 +120,58 @@ function DrinkDetails() {
   return (
     <div>
       {drinks && meals && (
-        <div>
-          <img
-            src={ drinks[0].strDrinkThumb }
-            alt="Imagem da Receita"
-            width="150"
-            data-testid="recipe-photo"
-          />
-          <h1 data-testid="recipe-title">{ drinks[0].strDrink }</h1>
-          <p data-testid="recipe-category">{ drinks[0].strAlcoholic }</p>
-          <h2>Ingredients</h2>
-          <ul>
-            {Object.entries(drinks[0])
-              .filter(([key]) => key.startsWith('strIngredient') && drinks[0][key])
-              .map(([key, value], index) => {
-                const ingredientsKey = key.replace('strIngredient', 'strMeasure');
-                const quantity = drinks[0][ingredientsKey];
-                const ingredientWithQuantity = `${quantity} ${value}`;
-                return (
-                  <li
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                    key={ key }
-                  >
-                    {ingredientWithQuantity}
-                  </li>
-                );
-              })}
-          </ul>
-          <p data-testid="instructions">{drinks[0].strInstructions}</p>
-          <span>
-            <h2>Recommended</h2>
+        <div className="drinks-details">
+          <div className="drinks-details-header">
+            <img
+              src={ drinks[0].strDrinkThumb }
+              alt="Imagem da Receita"
+              width="150"
+              data-testid="recipe-photo"
+              className="drinks-details-picture"
+            />
+            <div className="drinks-details-title-area">
+              <h1
+                data-testid="recipe-title"
+                className="drinks-details-title"
+              >
+                { drinks[0].strDrink }
+              </h1>
+            </div>
+          </div>
+          <p
+            data-testid="recipe-category"
+            className="drinks-details-tag"
+          >
+            { drinks[0].strAlcoholic }
+          </p>
+          <div className="drinks-details-ingredients">
+            <h2 className="drinks-details-h2-title">Ingredients</h2>
+            <ul>
+              {Object.entries(drinks[0])
+                .filter(([key]) => key.startsWith('strIngredient') && drinks[0][key])
+                .map(([key, value], index) => {
+                  const ingredientsKey = key.replace('strIngredient', 'strMeasure');
+                  const quantity = drinks[0][ingredientsKey];
+                  const ingredientWithQuantity = `${quantity} ${value}`;
+                  return (
+                    <li
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                      key={ key }
+                    >
+                      {ingredientWithQuantity}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+          <p
+            data-testid="instructions"
+            className="drinks-details-instructions"
+          >
+            {drinks[0].strInstructions}
+          </p>
+          <span className="meals-details-carousel">
+            <h2 className="meals-details-h2-title">Recommended</h2>
             <Slider { ...settings }>
               {meals
                 .slice(0, carouselLength)
@@ -157,10 +180,9 @@ function DrinkDetails() {
                     key={ meal.idMeal }
                     data-testid={ `${index}-recommendation-card` }
                   >
-
                     <span>
                       <img
-                        className="d-block w-100"
+                        className="d-block w-100 meals-details-picture-carousel"
                         src={ meal.strMealThumb }
                         alt="Recipe thumb"
                         width="140"
@@ -175,7 +197,6 @@ function DrinkDetails() {
                   </div>
                 ))}
             </Slider>
-
           </span>
           {!doneRecipe && (
             <button
