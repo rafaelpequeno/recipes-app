@@ -1,0 +1,64 @@
+.meals-details {
+  background-color: rgb(138, 84, 40);
+  padding: 10px;
+}
+
+.meals-details-header {
+  align-items: center;
+  background-color: rgb(138, 84, 40);
+  display: flex;
+}
+
+.meals-details-picture {
+  border-radius: 8px;
+}
+
+.meals-details-title-area {
+  width: 100%;
+}
+
+.meals-details-title {
+  color: rgb(231, 201, 163);
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.meals-details-tag {
+  background-color: rgb(144, 187, 69);
+  border-radius: 9px;
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+.meals-details-ingredients {
+  background-color: rgb(163, 106, 60);
+  border-radius: 11px;
+  margin: 0 20px;
+  padding: 9px;
+}
+
+.meals-details-h2-title {
+  font-size: 19px;
+}
+
+.meals-details-instructions {
+  line-height: 1.3;
+  text-align: justify;
+}
+
+.meals-details-video {
+  display: block;
+  margin: 0 auto;
+  width: 90vw;
+}
+
+.meals-details-carousel {
+  background-color: aquamarine;
+}
+
+.meals-details-picture-carousel {
+  border-radius: 8px;
+  margin: 0 13px;
+}
