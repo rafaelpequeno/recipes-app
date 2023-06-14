@@ -59,7 +59,7 @@ function FavoriteRecipes() {
                     copy(destinationUrl).then(() => { setShowCopy(true); });
                   } }
                 >
-                  <img src="src/images/shareIcon.svg" alt="compartilhar" />
+                  <img src={ shareIcon } alt="compartilhar" />
                   {showCopy && 'Link copied!'}
                 </button>
                 <button
@@ -100,7 +100,7 @@ function FavoriteRecipes() {
                     copy(destinationUrl).then(() => { setShowCopy(true); });
                   } }
                 >
-                  <img src="src/images/shareIcon.svg" alt="compartilhar" />
+                  <img src={ shareIcon } alt="compartilhar" />
                   {showCopy && 'Link copied!'}
                 </button>
                 <button
