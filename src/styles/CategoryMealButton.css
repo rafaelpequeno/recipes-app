@@ -1,9 +1,9 @@
-.buttons-list {
+.buttons-list-meal {
   background-color: rgb(110, 28, 8);
   color: azure;
   display: flex;
   font-size: 9.5px;
-  height: 68px;
+  height: 67px;
   justify-content: space-evenly;
 }
 
@@ -15,46 +15,47 @@
   display: block;
   font-size: 10px;
   margin: 48px auto 0;
+  padding: 0px;
   text-align: center;
 }
 
-.gray__meal__all {
-  background-image: url('../images/gray__meal__all.png');
+.gray__meal__All {
+  background-image: url('../images/gray_meal_all.png');
   background-size: cover;
   height: 44px;
   width: 44px;
 }
 
 .gray__meal__Beef {
-  background-image: url('../images/gray__meal__Beef.png');
+  background-image: url('../images/gray_meal_beef.png');
   background-size: cover;
   height: 44px;
   width: 44px;
 }
 
 .gray__meal__Breakfast {
-  background-image: url('../images/gray__meal__Breakfast.png');
+  background-image: url('../images/gray_meal_breakfast.png');
   background-size: cover;
   height: 44px;
   width: 44px;
 }
 
 .gray__meal__Chicken {
-  background-image: url('../images/gray__meal__Chicken.png');
+  background-image: url('../images/gray_meal_chicken.png');
   background-size: cover;
   height: 44px;
   width: 44px;
 }
 
 .gray__meal__Dessert {
-  background-image: url('../images/gray__meal__Dessert.png');
+  background-image: url('../images/gray_meal_dessert.png');
   background-size: cover;
   height: 44px;
   width: 44px;
 }
 
 .gray__meal__Goat {
-  background-image: url('../images/gray__meal__Goat.png');
+  background-image: url('../images/gray_meal_goat.png');
   background-size: cover;
   height: 44px;
   width: 44px;

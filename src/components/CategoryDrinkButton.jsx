@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import myContext from '../context/myContext';
 import dinamicDrinkCategory from '../services/dinamicDrinkCategoryAPI';
 import { drinkAPI } from '../services/drinkAPI';
+import '../styles/CategoryDrinkButton.css';
 
 function CategoryDrinkButton() {
   const {
@@ -31,25 +32,32 @@ function CategoryDrinkButton() {
   };
 
   return (
-    <div>
-      <section>
-        {drink5Category.map(({ strCategory }, index) => (
+    <div className="buttons-list-drink">
+      {drink5Category.map(({ strCategory }, index) => (
+        <div
+          key={ index }
+          className={ `gray__drink__${strCategory}` }
+        >
           <button
             key={ index }
             data-testid={ `${strCategory}-category-filter` }
             value={ strCategory }
             onClick={ (e) => handleCLick(e.target.value) }
+            className="buttons-list-icon"
           >
             { strCategory }
           </button>
-        ))}
-      </section>
-      <button
-        data-testid="All-category-filter"
-        onClick={ handleAllBtn }
-      >
-        All
-      </button>
+        </div>
+      ))}
+      <div className="gray__drink__All">
+        <button
+          data-testid="All-category-filter"
+          onClick={ handleAllBtn }
+          className="buttons-list-icon"
+        >
+          All
+        </button>
+      </div>
     </div>
   );
 }

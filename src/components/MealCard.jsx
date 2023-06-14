@@ -14,14 +14,14 @@ function MealCard() {
         <Link
           key={ index }
           to={ `/meals/${idMeal}` }
-          className="recipe-card"
+          className="recipe-meal-card"
         >
           <div
             data-testid={ `${index}-recipe-card` }
           >
             <h3
               data-testid={ `${index}-card-name` }
-              className="recipe-card-title"
+              className="recipe-meal-card-title"
             >
               { strMeal }
             </h3>

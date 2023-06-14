@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import myContext from '../context/myContext';
+import '../styles/DrinkCard.css';
 
 function DrinkCard() {
   const {
@@ -8,30 +9,32 @@ function DrinkCard() {
   } = useContext(myContext);
 
   return (
-    <div>
-      <section>
-        {filteredDrinks.map(({ strDrink, strDrinkThumb, idDrink }, index) => (
-          <Link key={ index } to={ `/drinks/${idDrink}` }>
-            <div
-              data-testid={ `${index}-recipe-card` }
+    <section className="drink-list">
+      {filteredDrinks.map(({ strDrink, strDrinkThumb, idDrink }, index) => (
+        <Link
+          key={ index }
+          to={ `/drinks/${idDrink}` }
+          className="recipe-drink-card"
+        >
+          <div
+            data-testid={ `${index}-recipe-card` }
+          >
+            <h3
+              data-testid={ `${index}-card-name` }
+              className="recipe-drink-card-title"
             >
-              <h3
-                data-testid={ `${index}-card-name` }
-              >
-                { strDrink }
-              </h3>
-              <img
-                height="100"
-                width="100"
+              { strDrink }
+            </h3>
+            <img
                 src={ strDrinkThumb }
                 alt={ strDrink }
                 data-testid={ `${index}-card-img` }
+                className="recipe-card-picture"
               />
             </div>
           </Link>
-        ))}
-      </section>
-    </div>
+      ))}
+    </section>
   );
 }
 
