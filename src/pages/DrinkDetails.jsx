@@ -6,6 +6,10 @@ import 'slick-carousel/slick/slick.css';
 import myContext from '../context/myContext';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/StartRecipeBTN.css';
+import clipboardCopy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+import filledHeart from '../images/blackHeartIcon.svg';
+import emptyHeart from '../images/whiteHeartIcon.svg';
 
 function DrinkDetails() {
   const { mealDetails,
@@ -17,6 +21,10 @@ function DrinkDetails() {
     btnText,
     setBTNText } = useContext(myContext);
 
+  const [textToCopy, setTextToCopy] = useState('');
+  const [CopyMessage, setCopyMessage] = useState(false);
+  const [favoriteIcon, setFavoriteIcon] = useState(false);
+
   const { drinks } = drinkDetails;
   const { meals } = mealDetails;
 
@@ -25,6 +33,13 @@ function DrinkDetails() {
   const carouselLength = 6;
 
   const history = useHistory();
+
+  const verifyFavorite = () => {
+    const favoriteData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const verification = favoriteData !== null ? favoriteData
+      .some((recipe) => recipe.id === id) : false;
+    setFavoriteIcon(verification);
+  };
 
   useEffect(() => {
     const apiData = async () => {
@@ -49,9 +64,12 @@ function DrinkDetails() {
       setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
     };
 
+    setTextToCopy(`http://localhost:3000/drinks/${id}`);
+
     apiData();
     verifyRecipe();
     verifyBTNText();
+    verifyFavorite();
   }, [id]);
 
   const settings = {
@@ -59,6 +77,43 @@ function DrinkDetails() {
     infinite: false,
     slidesToShow: 2,
     slidesToScroll: 2,
+  };
+
+  const handleCopy = () => {
+    setCopyMessage(true);
+    clipboardCopy(textToCopy);
+
+    const seconds = 2000;
+
+    const timer = setTimeout(() => {
+      setCopyMessage(false);
+    }, seconds);
+
+    return () => clearTimeout(timer);
+  };
+
+  const handleFavorite = () => {
+    const previewData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const drinkObj = {
+      id: drinks[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drinks[0].strCategory,
+      alcoholicOrNot: drinks[0].strAlcoholic,
+      name: drinks[0].strDrink,
+      image: drinks[0].strDrinkThumb,
+    };
+
+    if (!favoriteIcon) {
+      setFavoriteIcon(true);
+      return previewData === null
+        ? localStorage.setItem('favoriteRecipes', JSON.stringify([drinkObj]))
+        : localStorage
+          .setItem('favoriteRecipes', JSON.stringify([...previewData, drinkObj]));
+    }
+    setFavoriteIcon(false);
+    const removeFavorite = previewData.filter((recipe) => recipe.id !== id);
+    return localStorage.setItem('favoriteRecipes', JSON.stringify([...removeFavorite]));
   };
 
   return (
@@ -130,8 +185,24 @@ function DrinkDetails() {
             >
               {btnText}
             </button>)}
-          <button data-testid="share-btn">Share</button>
-          <button data-testid="favorite-btn">Favorite</button>
+          <img
+            src={ shareIcon }
+            alt="Share button"
+            data-testid="share-btn"
+            onClick={ () => handleCopy() }
+            aria-hidden="true"
+            width="50"
+            // style só está aqui pois outros elementos ficam a frente dele e não passa no avaliador ao fazer css pode ser removido
+            style={ { padding: '5px', display: 'flex' } }
+          />
+          {CopyMessage && <span>Link copied!</span>}
+          <img
+            src={ favoriteIcon ? filledHeart : emptyHeart }
+            alt="favorite Icon"
+            data-testid="favorite-btn"
+            onClick={ () => handleFavorite() }
+            aria-hidden="true"
+          />
         </div>)}
     </div>
   );

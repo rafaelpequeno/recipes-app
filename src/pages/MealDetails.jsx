@@ -4,8 +4,13 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import myContext from '../context/myContext';
+import clipboardCopy from 'clipboard-copy';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/StartRecipeBTN.css';
+import shareIcon from '../images/shareIcon.svg';
+import filledHeart from '../images/blackHeartIcon.svg';
+import emptyHeart from '../images/whiteHeartIcon.svg';
+import '../styles/MealDetails.css';
 
 function MealDetails() {
   const { mealDetails,
@@ -17,6 +22,10 @@ function MealDetails() {
     btnText,
     setBTNText } = useContext(myContext);
 
+  const [textToCopy, setTextToCopy] = useState('');
+  const [CopyMessage, setCopyMessage] = useState(false);
+  const [favoriteIcon, setFavoriteIcon] = useState(false);
+
   const { meals } = mealDetails;
   const { drinks } = drinkDetails;
 
@@ -27,6 +36,13 @@ function MealDetails() {
   const history = useHistory();
 
   const updateLink = (oldLink) => oldLink.replace('watch', 'embed').replace(/\?v=/g, '/');
+
+  const verifyFavorite = () => {
+    const favoriteData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const verification = favoriteData !== null ? favoriteData
+      .some((recipe) => recipe.id === id) : false;
+    setFavoriteIcon(verification);
+  };
 
   useEffect(() => {
     const apiData = async () => {
@@ -51,9 +67,12 @@ function MealDetails() {
       setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
     };
 
+    setTextToCopy(`http://localhost:3000/meals/${id}`);
+
     apiData();
     verifyRecipe();
     verifyBTNText();
+    verifyFavorite();
   }, [id]);
 
   const settings = {
@@ -63,37 +82,96 @@ function MealDetails() {
     slidesToScroll: 2,
   };
 
+  const handleCopy = () => {
+    setCopyMessage(true);
+    clipboardCopy(textToCopy);
+
+    const seconds = 2000;
+
+    const timer = setTimeout(() => {
+      setCopyMessage(false);
+    }, seconds);
+
+    return () => clearTimeout(timer);
+  };
+
+  const handleFavorite = () => {
+    const previewData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const mealObj = {
+      id: meals[0].idMeal,
+      type: 'meal',
+      nationality: meals[0].strArea,
+      category: meals[0].strCategory,
+      alcoholicOrNot: '',
+      name: meals[0].strMeal,
+      image: meals[0].strMealThumb,
+    };
+
+    if (!favoriteIcon) {
+      setFavoriteIcon(true);
+      return previewData === null
+        ? localStorage.setItem('favoriteRecipes', JSON.stringify([mealObj]))
+        : localStorage
+          .setItem('favoriteRecipes', JSON.stringify([...previewData, mealObj]));
+    }
+    setFavoriteIcon(false);
+    const removeFavorite = previewData.filter((recipe) => recipe.id !== id);
+    return localStorage.setItem('favoriteRecipes', JSON.stringify([...removeFavorite]));
+  };
+
   return (
     <div>
       {meals && drinks && (
-        <div>
-          <img
-            src={ meals[0].strMealThumb }
-            alt="Imagem da Receita"
-            width="150"
-            data-testid="recipe-photo"
-          />
-          <h1 data-testid="recipe-title">{ meals[0].strMeal }</h1>
-          <p data-testid="recipe-category">{ meals[0].strCategory }</p>
-          <h2>Ingredients</h2>
-          <ul>
-            {Object.entries(meals[0])
-              .filter(([key]) => key.startsWith('strIngredient') && meals[0][key])
-              .map(([key, value], index) => {
-                const IngredientsKey = key.replace('strIngredient', 'strMeasure');
-                const quantity = meals[0][IngredientsKey];
-                const ingredientWithQuantity = `${quantity} ${value}`;
-                return (
-                  <li
-                    data-testid={ `${index}-ingredient-name-and-measure` }
-                    key={ key }
-                  >
-                    {ingredientWithQuantity}
-                  </li>
-                );
-              })}
-          </ul>
-          <p data-testid="instructions">{meals[0].strInstructions}</p>
+        <div className="meals-details">
+          <div className="meals-details-header">
+            <img
+              src={ meals[0].strMealThumb }
+              alt="Imagem da Receita"
+              width="150"
+              data-testid="recipe-photo"
+              className="meals-details-picture"
+            />
+            <div className="meals-details-title-area">
+              <h1
+                data-testid="recipe-title"
+                className="meals-details-title"
+              >
+                { meals[0].strMeal }
+              </h1>
+            </div>
+          </div>
+          <p
+            data-testid="recipe-category"
+            className="meals-details-tag"
+          >
+            { meals[0].strCategory }
+          </p>
+          <div className="meals-details-ingredients">
+            <h2 className="meals-details-h2-title">Ingredients</h2>
+            <ul>
+              {Object.entries(meals[0])
+                .filter(([key]) => key.startsWith('strIngredient') && meals[0][key])
+                .map(([key, value], index) => {
+                  const IngredientsKey = key.replace('strIngredient', 'strMeasure');
+                  const quantity = meals[0][IngredientsKey];
+                  const ingredientWithQuantity = `${quantity} ${value}`;
+                  return (
+                    <li
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                      key={ key }
+                    >
+                      {ingredientWithQuantity}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+          <p
+            data-testid="instructions"
+            className="meals-details-instructions"
+          >
+            {meals[0].strInstructions}
+          </p>
           <iframe
             data-testid="video"
             width="560"
@@ -102,9 +180,10 @@ function MealDetails() {
             title="YouTube video player"
             allow="accelerometer"
             allowFullScreen
+            className="meals-details-video"
           />
-          <span>
-            <h2>Recommended</h2>
+          <span className="meals-details-carousel">
+            <h2 className="meals-details-h2-title">Recommended</h2>
             <Slider { ...settings }>
               {drinks
                 // .slice(0, carouselLength)
@@ -114,10 +193,9 @@ function MealDetails() {
                     key={ drink.idDrink }
                     data-testid={ `${index}-recommendation-card` }
                   >
-
                     <span>
                       <img
-                        className="d-block w-100"
+                        className="d-block w-100 meals-details-picture-carousel"
                         src={ drink.strDrinkThumb }
                         alt="Recipe thumb"
                         width="140"
@@ -126,13 +204,11 @@ function MealDetails() {
                         data-testid={ `${index}-recommendation-title` }
                       >
                         {drink.strDrink}
-
                       </h3>
                     </span>
                   </div>
                 ))}
             </Slider>
-            {/* {console.log(meals)} */}
           </span>
           {!doneRecipe && (
             <button
@@ -142,8 +218,24 @@ function MealDetails() {
             >
               {btnText}
             </button>)}
-          <button data-testid="share-btn">Share</button>
-          <button data-testid="favorite-btn">Favorite</button>
+          <img
+            src={ shareIcon }
+            alt="Share button"
+            data-testid="share-btn"
+            onClick={ () => handleCopy() }
+            aria-hidden="true"
+            width="50"
+            // style só está aqui pois outros elementos ficam a frente dele e não passa no avaliador ao fazer css pode ser removido
+            style={ { padding: '5px', display: 'flex' } }
+          />
+          {CopyMessage && <span>Link copied!</span>}
+          <img
+            src={ favoriteIcon ? filledHeart : emptyHeart }
+            alt="favorite Icon"
+            data-testid="favorite-btn"
+            onClick={ () => handleFavorite() }
+            aria-hidden="true"
+          />
         </div>)}
     </div>
   );
