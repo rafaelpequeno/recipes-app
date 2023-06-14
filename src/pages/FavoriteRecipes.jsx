@@ -12,7 +12,7 @@ function FavoriteRecipes() {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     setFavoriteRecipes(favRecipes);
   }, []);
 
@@ -21,8 +21,9 @@ function FavoriteRecipes() {
   };
 
   const handleFav = (id) => {
-    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(...newFav));
+    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id) || [];
+    setFavoriteRecipes(newFav);
+    localStorage.setItem('favoriteRecipes', JSON.stringify([...newFav]));
   };
 
   const handleCopy = (type, id) => {
