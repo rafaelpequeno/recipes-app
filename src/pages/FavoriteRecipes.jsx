@@ -32,7 +32,6 @@ function FavoriteRecipes() {
     } else if (type === 'drinks') {
       clipboardCopy(`http://localhost:3000/drinks/${id}`);
     }
-
     const seconds = 2000;
     setTimeout(() => {
       setShowCopy(false);

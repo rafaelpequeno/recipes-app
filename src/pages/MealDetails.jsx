@@ -3,8 +3,8 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import myContext from '../context/myContext';
 import clipboardCopy from 'clipboard-copy';
+import myContext from '../context/myContext';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/StartRecipeBTN.css';
 import shareIcon from '../images/shareIcon.svg';
