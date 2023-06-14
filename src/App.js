@@ -6,7 +6,7 @@ import DrinkDetails from './pages/DrinkDetails';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Login from './pages/Login';
 import MealDetails from './pages/MealDetails';
-import Drinks from './pages/Drinks';
+// import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import Recipes from './pages/Recipes';
 
