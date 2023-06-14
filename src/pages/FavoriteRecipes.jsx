@@ -57,6 +57,9 @@ function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt="imgreceita"
+                    aria-hidden="true"
+                    width="100"
+                    style={ { padding: '5px', display: 'flex' } }
                   />
                   <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
@@ -73,13 +76,15 @@ function FavoriteRecipes() {
                   style={ { padding: '5px', display: 'flex' } }
                 />
                 {showCopy && <p data-testid="linkmsg">Link copied!</p>}
-                <button
-                  type="button"
+                <img
+                  src={ blackHeart }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   onClick={ () => handleFav(recipe.id) }
-                >
-                  <img src={ blackHeart } alt="desfavoritar" />
-                </button>
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
               </div>
             ) : (
             // ----------DRINK CARD---------------
@@ -91,6 +96,9 @@ function FavoriteRecipes() {
                     data-testid={ `${index}-horizontal-image` }
                     src={ recipe.image }
                     alt="imgreceita"
+                    aria-hidden="true"
+                    width="100"
+                    style={ { padding: '5px', display: 'flex' } }
                   />
                   <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
@@ -109,13 +117,15 @@ function FavoriteRecipes() {
                   style={ { padding: '5px', display: 'flex' } }
                 />
                 {showCopy && <p data-testid="linkmsg">Link copied!</p>}
-                <button
-                  type="button"
+                <img
+                  src={ blackHeart }
+                  alt="compartilhar"
                   data-testid={ `${index}-horizontal-favorite-btn` }
                   onClick={ () => handleFav(recipe.id) }
-                >
-                  <img src={ blackHeart } alt="desfavoritar" />
-                </button>
+                  aria-hidden="true"
+                  width="50"
+                  style={ { padding: '5px', display: 'flex' } }
+                />
               </div>
             )
           ))}
