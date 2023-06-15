@@ -7,6 +7,8 @@ import '../styles/StartRecipeBTN.css';
 function RecipeInProgress() {
   const [mealOrDrink, setMealOrDrink] = useState();
   const [ingredientChecked, setIngredientChecked] = useState({});
+  const [emptyLocalStorage, setEmptyLocalStorage] = useState(true);
+  const [recipesInProgress, setRecipesInProgress] = useState({ drinks: {}, meals: {} });
 
   const { id } = useParams();
 
@@ -34,19 +36,83 @@ function RecipeInProgress() {
     setIngredientChecked({ ...ingredientChecked, [name]: checked });
   };
 
+  useEffect(() => {
+    if (mealOrDrink) {
+      if (pathname.includes('/meals')) {
+        setRecipesInProgress((prevState) => {
+          const novoObjeto = { ...prevState.meals };
+          const ingredients = Object.keys(ingredientChecked)
+            .filter((element) => ingredientChecked[element] === true);
+          console.log(ingredients);
+          novoObjeto[mealOrDrink.idMeal] = ingredients;
+          return {
+            ...prevState,
+            meals: novoObjeto,
+          };
+        });
+        setEmptyLocalStorage(false);
+      }
+      if (pathname.includes('/drinks')) {
+        setRecipesInProgress((prevState) => {
+          const novoObjeto = { ...prevState.drinks };
+          const ingredients = Object.keys(ingredientChecked)
+            .filter((element) => ingredientChecked[element] === true);
+          console.log(ingredients);
+          novoObjeto[mealOrDrink.idDrink] = ingredients;
+          return {
+            ...prevState,
+            drinks: novoObjeto,
+          };
+        });
+        setEmptyLocalStorage(false);
+      }
+    }
+  }, [ingredientChecked]);
+
+  useEffect(() => {
+    if (!emptyLocalStorage) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
+    }
+  }, [recipesInProgress]);
+
+  useEffect(() => {
+    const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (recipes) {
+      if (pathname.includes(`/meals/${id}`)) {
+        const ingredients = recipes.meals[id];
+        const newObjIngredients = {};
+        ingredients.forEach((ingredient) => {
+          newObjIngredients[ingredient] = true;
+        });
+        setIngredientChecked(newObjIngredients);
+      } else if (pathname.includes(`/drinks/${id}/in-progress`)) {
+        const ingredients = recipes.drinks[id];
+        const newObjIngredients = {};
+        ingredients.forEach((ingredient) => {
+          newObjIngredients[ingredient] = true;
+        });
+        setIngredientChecked(newObjIngredients);
+      }
+    }
+  }, []);
+
   return (
     <div>
       {mealOrDrink
         && (
           <div>
             <img
-              src={ mealOrDrink.strDrinkThumb }
+              src={ mealOrDrink.strDrinkThumb || mealOrDrink.strMealThumb }
               alt="Imagem da Receita"
               width="150"
               data-testid="recipe-photo"
             />
-            <h1 data-testid="recipe-title">{ mealOrDrink.strDrink }</h1>
-            <p data-testid="recipe-category">{ mealOrDrink.strAlcoholic }</p>
+            <h1 data-testid="recipe-title">
+              { mealOrDrink.strDrink || mealOrDrink.strMeal }
+            </h1>
+            <p data-testid="recipe-category">
+              { mealOrDrink.strAlcoholic || mealOrDrink.strCategory }
+            </p>
             <h2>Ingredients</h2>
             {Object.entries(mealOrDrink)
               .filter(([key]) => key.startsWith('strIngredient') && mealOrDrink[key])
@@ -74,7 +140,6 @@ function RecipeInProgress() {
                       {ingredientWithQuantity}
                     </label>
                   </div>
-
                 );
               })}
             <p data-testid="instructions">{mealOrDrink.strInstructions}</p>
