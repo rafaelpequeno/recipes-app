@@ -30,6 +30,7 @@ function MealDetails() {
   const { drinks } = drinkDetails;
 
   const { id } = useParams();
+  const { location: { pathname } } = useHistory();
 
   const carouselLength = 6;
 
@@ -76,6 +77,7 @@ function MealDetails() {
   }, [id]);
 
   const settings = {
+    arrows: true,
     dots: true,
     infinite: false,
     slidesToShow: 2,
@@ -182,7 +184,7 @@ function MealDetails() {
             allowFullScreen
             className="meals-details-video"
           />
-          <span className="meals-details-carousel">
+          <span>
             <h2 className="meals-details-h2-title">Recommended</h2>
             <Slider { ...settings }>
               {drinks
