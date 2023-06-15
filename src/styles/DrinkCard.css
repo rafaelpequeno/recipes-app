@@ -1,11 +1,11 @@
-.meal-list {
+.drink-list {
   display: flex;
   flex-flow: wrap;
   flex-direction: row;
   margin-left: 4px;
 }
 
-.recipe-meal-card {
+.recipe-drink-card {
   background-color: rgb(200, 148, 106);
   border: 0 solid rgb(200, 148, 106);
   border-radius: 8px;
@@ -13,16 +13,10 @@
   text-decoration: none;
 }
 
-.recipe-meal-card-title {
+.recipe-drink-card-title {
   color: rgb(110, 28, 8);
   font-size: 11px;
-  height: 37px;
+  height: 26px;
   margin-left: 5px;
   max-width: 157px;
-}
-
-.recipe-card-picture {
-  max-width: 159px;
-  padding: 0 4px;
-  width: 44vw;
 }

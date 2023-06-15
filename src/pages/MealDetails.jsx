@@ -5,10 +5,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import myContext from '../context/myContext';
+import { fetchRecipeDetails } from '../services/fetchMealDetails';
+import shareIcon from '../images/shareIcon.svg';
 import filledHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import emptyHeart from '../images/whiteHeartIcon.svg';
-import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/MealDetails.css';
 import '../styles/StartRecipeBTN.css';
 

@@ -3,12 +3,6 @@ import myContext from '../context/myContext';
 import dinamicMealCategory from '../services/dinamicMealCategoryAPI';
 import { mealAPI } from '../services/mealAPI';
 import '../styles/CategoryMealButton.css';
-// import beef from '../images/gray__meal__Beef.png';
-// import breakfast from '../images/gray__meal__Breakfast.png';
-// import chicken from '../images/gray__meal__Chicken.png';
-// import dessert from '../images/gray__meal__Dessert.png';
-// import goat from '../images/gray__meal__Goat.png';
-// import all from '../images/gray__meal__All.png';
 
 function CategoryMealButton() {
   const {
@@ -17,10 +11,6 @@ function CategoryMealButton() {
     filterOnOff,
     setFilterOnOff,
   } = useContext(myContext);
-
-  // const buttonsIcons = [
-  //   beef, breakfast, chicken, dessert, goat, all,
-  // ];
 
   const handleAllBtn = async () => {
     const fetchMeals = await mealAPI();
@@ -42,7 +32,7 @@ function CategoryMealButton() {
   };
 
   return (
-    <div className="buttons-list">
+    <div className="buttons-list-meal">
       {meal5Category.map(({ strCategory }, index) => (
         <div
           key={ index }
@@ -59,7 +49,7 @@ function CategoryMealButton() {
           </button>
         </div>
       ))}
-      <div className="gray__meal__all">
+      <div className="gray__meal__All">
         <button
           data-testid="All-category-filter"
           onClick={ handleAllBtn }
