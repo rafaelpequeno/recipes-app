@@ -8,15 +8,15 @@
   background-color: rgb(138, 84, 40);
   display: flex;
 }
-  
+
 .drinks-details-picture {
   border-radius: 8px;
 }
-  
+
 .drinks-details-title-area {
   width: 100%;
 }
-  
+
 .drinks-details-title {
   color: rgb(231, 201, 163);
   font-size: 17px;
