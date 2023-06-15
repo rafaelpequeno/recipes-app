@@ -6,46 +6,45 @@
   height: 75px;
   justify-content: space-evenly;
 }
-  
+
 .gray__drink__All {
-    background-image: url('../images/gray_drink_all.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
-  .gray__drink__Cocktail {
-    background-image: url('../images/gray_drink_cocktail.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
-  .gray__drink__Cocoa {
-    background-image: url('../images/gray_drink_cocoa.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
-  .gray__drink__Ordinary {
-    background-image: url('../images/gray_drink_ordinary.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
-  .gray__drink__Other {
-    background-image: url('../images/gray_drink_other-unknow.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
-  .gray__drink__Shake {
-    background-image: url('../images/gray_drink_shake.png');
-    background-size: cover;
-    height: 44px;
-    width: 44px;
-  }
-  
+  background-image: url('../images/gray_drink_all.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}
+
+.gray__drink__Cocktail {
+  background-image: url('../images/gray_drink_cocktail.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}
+
+.gray__drink__Cocoa {
+  background-image: url('../images/gray_drink_cocoa.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}
+
+.gray__drink__Ordinary {
+  background-image: url('../images/gray_drink_ordinary.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}
+
+.gray__drink__Other {
+  background-image: url('../images/gray_drink_other-unknow.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}
+
+.gray__drink__Shake {
+  background-image: url('../images/gray_drink_shake.png');
+  background-size: cover;
+  height: 44px;
+  width: 44px;
+}

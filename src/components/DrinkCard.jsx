@@ -26,13 +26,13 @@ function DrinkCard() {
               { strDrink }
             </h3>
             <img
-                src={ strDrinkThumb }
-                alt={ strDrink }
-                data-testid={ `${index}-card-img` }
-                className="recipe-card-picture"
-              />
-            </div>
-          </Link>
+              src={ strDrinkThumb }
+              alt={ strDrink }
+              data-testid={ `${index}-card-img` }
+              className="recipe-card-picture"
+            />
+          </div>
+        </Link>
       ))}
     </section>
   );
