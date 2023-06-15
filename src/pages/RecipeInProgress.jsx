@@ -1,5 +1,9 @@
+import clipboardCopy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import filledHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+import emptyHeart from '../images/whiteHeartIcon.svg';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/RecipeInProgress.css';
 import '../styles/StartRecipeBTN.css';
@@ -9,11 +13,29 @@ function RecipeInProgress() {
   const [ingredientChecked, setIngredientChecked] = useState({});
   const [emptyLocalStorage, setEmptyLocalStorage] = useState(true);
   const [recipesInProgress, setRecipesInProgress] = useState({ drinks: {}, meals: {} });
-
+  const [textToCopy, setTextToCopy] = useState('');
+  const [CopyMessage, setCopyMessage] = useState(false);
+  const [favoriteIcon, setFavoriteIcon] = useState(false);
+  const [finishButtonDisabled, setFinishButtonDisabled] = useState(true);
   const { id } = useParams();
-
   const history = useHistory();
   const { location: { pathname } } = useHistory();
+
+  const verifyFavorite = () => {
+    const favoriteData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const verification = favoriteData !== null ? favoriteData
+      .some((recipe) => recipe.id === id) : false;
+    setFavoriteIcon(verification);
+  };
+  const verifyIngredientsAllChecked = () => {
+    const allIngredients = Object
+      .entries(mealOrDrink).filter(([key]) => key
+        .startsWith('strIngredient') && mealOrDrink[key]);
+    const ingredientsCheck = Object
+      .keys(ingredientChecked).filter((element) => ingredientChecked[element] === true);
+    return allIngredients.length === ingredientsCheck.length
+      ? setFinishButtonDisabled(false) : setFinishButtonDisabled(true);
+  };
 
   useEffect(() => {
     if (pathname.includes('/meals')) {
@@ -22,20 +44,22 @@ function RecipeInProgress() {
         setMealOrDrink(mealData.meals[0]);
       };
       apiData();
+      verifyFavorite();
+      setTextToCopy(`http://localhost:3000/meals/${id}`);
     } else {
       const apiData = async () => {
         const drinkData = await fetchRecipeDetails(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
         setMealOrDrink(drinkData.drinks[0]);
       };
       apiData();
+      verifyFavorite();
+      setTextToCopy(`http://localhost:3000/drinks/${id}`);
     }
   }, [id]);
-
   const handleInputChange = ({ target }) => {
     const { name, checked } = target;
     setIngredientChecked({ ...ingredientChecked, [name]: checked });
   };
-
   useEffect(() => {
     if (mealOrDrink) {
       if (pathname.includes('/meals')) {
@@ -45,10 +69,7 @@ function RecipeInProgress() {
             .filter((element) => ingredientChecked[element] === true);
           console.log(ingredients);
           novoObjeto[mealOrDrink.idMeal] = ingredients;
-          return {
-            ...prevState,
-            meals: novoObjeto,
-          };
+          return { ...prevState, meals: novoObjeto };
         });
         setEmptyLocalStorage(false);
       }
@@ -66,15 +87,14 @@ function RecipeInProgress() {
         });
         setEmptyLocalStorage(false);
       }
+      verifyIngredientsAllChecked();
     }
   }, [ingredientChecked]);
-
   useEffect(() => {
     if (!emptyLocalStorage) {
       localStorage.setItem('inProgressRecipes', JSON.stringify(recipesInProgress));
     }
   }, [recipesInProgress]);
-
   useEffect(() => {
     const recipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipes) {
@@ -95,6 +115,55 @@ function RecipeInProgress() {
       }
     }
   }, []);
+  const handleCopy = () => {
+    setCopyMessage(true);
+    clipboardCopy(textToCopy);
+    const seconds = 2000;
+    const timer = setTimeout(() => {
+      setCopyMessage(false);
+    }, seconds);
+    return () => clearTimeout(timer);
+  };
+  const handleFavorite = () => {
+    const previewData = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const mealOrDrinkFavorited = {
+      id: mealOrDrink.idMeal || mealOrDrink.idDrink,
+      type: pathname.includes('/meals') ? 'meal' : 'drink',
+      nationality: pathname.includes('/meals') ? mealOrDrink.strArea : '',
+      category: mealOrDrink.strCategory || '',
+      alcoholicOrNot: pathname.includes('/drinks') ? mealOrDrink.strAlcoholic : '',
+      name: mealOrDrink.strMeal || mealOrDrink.strDrink,
+      image: mealOrDrink.strMealThumb || mealOrDrink.strDrinkThumb,
+    };
+    if (!favoriteIcon) {
+      setFavoriteIcon(true);
+      return previewData === null
+        ? localStorage.setItem('favoriteRecipes', JSON.stringify([mealOrDrinkFavorited]))
+        : localStorage.setItem('favoriteRecipes', JSON
+          .stringify([...previewData, mealOrDrinkFavorited]));
+    }
+    setFavoriteIcon(false);
+    const removeFavorite = previewData.filter((recipe) => recipe.id !== id);
+    return localStorage.setItem('favoriteRecipes', JSON.stringify([...removeFavorite]));
+  };
+  const handleClickFinish = () => {
+    const dateNow = new Date();
+    const doneRecipe = {
+      id: mealOrDrink.idMeal || mealOrDrink.idDrink,
+      type: pathname.includes('/meals') ? 'meal' : 'drink',
+      nationality: pathname.includes('/meals') ? mealOrDrink.strArea : '',
+      category: mealOrDrink.strCategory || '',
+      alcoholicOrNot: pathname.includes('/drinks') ? mealOrDrink.strAlcoholic : '',
+      name: mealOrDrink.strMeal || mealOrDrink.strDrink,
+      image: mealOrDrink.strMealThumb || mealOrDrink.strDrinkThumb,
+      doneDate: dateNow.toISOString(),
+      tags: pathname.includes('/meals') ? mealOrDrink.strTags.split(',') : [],
+    };
+    const doneRecipesStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    localStorage.setItem('doneRecipes', JSON
+      .stringify([...doneRecipesStorage, doneRecipe]));
+    history.push('/done-recipes');
+  };
 
   return (
     <div>
@@ -118,7 +187,8 @@ function RecipeInProgress() {
               .filter(([key]) => key.startsWith('strIngredient') && mealOrDrink[key])
               .map(([key, value], index) => {
                 const ingredientsKey = key.replace('strIngredient', 'strMeasure');
-                const quantity = mealOrDrink[ingredientsKey];
+                const quantity = mealOrDrink[ingredientsKey] === null
+                  ? '' : mealOrDrink[ingredientsKey];
                 const ingredientWithQuantity = `${quantity} ${value}`;
                 return (
                   <div
@@ -146,12 +216,28 @@ function RecipeInProgress() {
             <button
               className="startRecipe"
               data-testid="finish-recipe-btn"
-              onClick={ () => history.push(`/drinks/${id}/in-progress`) }
+              disabled={ finishButtonDisabled }
+              onClick={ () => handleClickFinish() }
             >
               Finish Recipe
             </button>
-            <button data-testid="share-btn">Share</button>
-            <button data-testid="favorite-btn">Favorite</button>
+            <img
+              src={ shareIcon }
+              alt="Share button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy() }
+              aria-hidden="true"
+              width="50"
+              style={ { padding: '5px', display: 'flex' } }
+            />
+            {CopyMessage && <span>Link copied!</span>}
+            <img
+              src={ favoriteIcon ? filledHeart : emptyHeart }
+              alt="favorite Icon"
+              data-testid="favorite-btn"
+              onClick={ () => handleFavorite() }
+              aria-hidden="true"
+            />
           </div>
         )}
     </div>
