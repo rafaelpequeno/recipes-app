@@ -1,6 +1,6 @@
+import clipboardCopy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import clipboardCopy from 'clipboard-copy';
 import FilterButtons from '../components/FilterButtons';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -9,36 +9,10 @@ function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState([]);
   const [showCopy, setShowCopy] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
-  // MOCK para testar sem o localStorage
-  const doneRecipes = [
-    {
-      id: '52771',
-      type: 'meal',
-      nationality: 'Italian',
-      category: 'Vegetarian',
-      alcoholicOrNot: '',
-      name: 'Spicy Arrabiata Penne',
-      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-      doneDate: '23/06/2020',
-      tags: ['Pasta', 'Curry'],
-    },
-    {
-      id: '178319',
-      type: 'drink',
-      nationality: '',
-      category: 'Cocktail',
-      alcoholicOrNot: 'Alcoholic',
-      name: 'Aquamarine',
-      image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-      doneDate: '23/06/2020',
-      tags: [],
-    },
-  ];
 
   useEffect(() => {
-  //   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   setRecipesDone(recipes);
-    setRecipesDone(doneRecipes);
+    const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    setRecipesDone(recipes);
   }, []);
 
   const filterByCategory = (category) => {
