@@ -34,9 +34,7 @@ function FavoriteRecipes() {
       clipboardCopy(`http://localhost:3000/drinks/${id}`);
     }
     const seconds = 2000;
-    setTimeout(() => {
-      setShowCopy(false);
-    }, seconds);
+    setTimeout(() => { setShowCopy(false); }, seconds);
   };
 
   return (
@@ -111,12 +109,12 @@ function FavoriteRecipes() {
                   src={ shareIcon }
                   alt="compartilhar"
                   data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => handleCopy('meals', recipe.id) }
+                  onClick={ () => handleCopy('drinks', recipe.id) }
                   aria-hidden="true"
                   width="50"
                   style={ { padding: '5px', display: 'flex' } }
                 />
-                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
+                {showCopy && <p>Link copied!</p>}
                 <img
                   src={ blackHeart }
                   alt="compartilhar"
