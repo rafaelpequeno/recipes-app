@@ -29,6 +29,8 @@ function Provider({ children }) {
   const [drinkDetails, setDrinkDetails] = useState([]);
   const [doneRecipe, setDoneRecipe] = useState('');
   const [btnText, setBTNText] = useState('');
+  const [youtubetLink, setYoutubeLink] = useState('');
+  const [carouselData, setCarouselData] = useState([]);
 
   const requestMealAPI = async () => {
     const fetchMeals = await mealAPI();
@@ -97,6 +99,10 @@ function Provider({ children }) {
       setDoneRecipe,
       btnText,
       setBTNText,
+      youtubetLink,
+      setYoutubeLink,
+      carouselData,
+      setCarouselData,
     }),
     [
       mealRecipes,
@@ -124,6 +130,10 @@ function Provider({ children }) {
       setDoneRecipe,
       btnText,
       setBTNText,
+      youtubetLink,
+      setYoutubeLink,
+      carouselData,
+      setCarouselData,
     ],
   );
 
