@@ -1,0 +1,14 @@
+.details-and-ingredients {
+  display: flex;
+  flex-direction: column;
+}
+
+/* IPAD 14.7.1 */
+
+@media screen and ( min-width : 1080px ) {
+
+  .details-and-ingredients {
+    flex-direction: row;
+    margin-bottom: 15px;
+  }
+}

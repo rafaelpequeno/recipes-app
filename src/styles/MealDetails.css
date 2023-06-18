@@ -1,6 +1,8 @@
 .meals-details {
   background-color: rgb(138, 84, 40);
   padding: 10px;
+  height: calc(100vh - 62px);
+  overflow: scroll;
 }
 
 .meals-details-header {
@@ -61,4 +63,23 @@
 .meals-details-picture-carousel {
   border-radius: 8px;
   margin: 0 13px;
+}
+
+/* IPAD 14.7.1 */
+
+@media screen and ( min-width : 1080px ) {
+
+  .meals-details-title {
+    font-size: 35px;
+    line-height: 1.6;
+  }
+
+  .meals-details-ingredients {
+    flex: 30%;
+  }
+
+  .meals-details-instructions {
+    flex: 70%;
+    padding: 0 13px 0 11px;
+  }
 }
