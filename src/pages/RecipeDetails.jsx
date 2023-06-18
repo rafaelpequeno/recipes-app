@@ -6,6 +6,7 @@ import filledHeart from '../images/blackHeartIcon.svg';
 import emptyHeart from '../images/whiteHeartIcon.svg';
 import myContext from '../context/myContext';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
+import '../styles/RecipeDetails.css';
 import '../styles/MealDetails.css';
 import '../styles/DrinkDetails.css';
 import '../styles/StartRecipeBTN.css';
@@ -150,44 +151,47 @@ function RecipeDetails() {
             { route === 'drinks' ? recipeData.strAlcoholic
               : recipeData.strCategory }
           </p>
-          <div className={ `${route}-details-ingredients` }>
-            <h2 className={ `${route}-details-h2-title` }>Ingredients</h2>
-            <ul>
-              {Object.entries(recipeData)
-                .filter(([key]) => key.startsWith('strIngredient') && recipeData[key])
-                .map(([key, value], index) => {
-                  const IngredientsKey = key.replace('strIngredient', 'strMeasure');
-                  const quantity = recipeData[IngredientsKey];
-                  const ingredientWithQuantity = `${quantity} ${value}`;
-                  return (
-                    <li
-                      data-testid={ `${index}-ingredient-name-and-measure` }
-                      key={ key }
-                    >
-                      {ingredientWithQuantity}
-                    </li>
-                  );
-                })}
-            </ul>
+
+          <div className="details-and-ingredients">
+
+            <div className={ `${route}-details-ingredients` }>
+              <h2 className={ `${route}-details-h2-title` }>Ingredients</h2>
+              <ul>
+                {Object.entries(recipeData)
+                  .filter(([key]) => key.startsWith('strIngredient') && recipeData[key])
+                  .map(([key, value], index) => {
+                    const IngredientsKey = key.replace('strIngredient', 'strMeasure');
+                    const quantity = recipeData[IngredientsKey];
+                    const ingredientWithQuantity = `${quantity} ${value}`;
+                    return (
+                      <li
+                        data-testid={ `${index}-ingredient-name-and-measure` }
+                        key={ key }
+                      >
+                        {ingredientWithQuantity}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+
+            <div className={ `${route}-details-instructions` }>
+              <h2 className={ `${route}-details-h2-title` }>Instructions</h2>
+              <p
+                data-testid="instructions"
+                className={ `${route}-details-instructions` }
+              >
+                {recipeData.strInstructions}
+              </p>
+            </div>
+
           </div>
-          <p
-            data-testid="instructions"
-            className={ `${route}-details-instructions` }
-          >
-            {recipeData.strInstructions}
-          </p>
+
           {youtubetLink && <YoutubeVideo />}
           {carouselData && (
             <Carousel />
           )}
-          {!doneRecipe && (
-            <button
-              className="startRecipe"
-              data-testid="start-recipe-btn"
-              onClick={ () => history.push(`/${route}/${id}/in-progress`) }
-            >
-              {btnText}
-            </button>)}
+
           <img
             src={ shareIcon }
             alt="Share button"
@@ -198,7 +202,9 @@ function RecipeDetails() {
             // style só está aqui pois outros elementos ficam a frente dele e não passa no avaliador ao fazer css pode ser removido
             style={ { padding: '5px', display: 'flex' } }
           />
+
           {CopyMessage && <span style={ { display: 'flex' } }>Link copied!</span>}
+
           <img
             src={ favoriteIcon ? filledHeart : emptyHeart }
             alt="favorite Icon"
@@ -207,6 +213,18 @@ function RecipeDetails() {
             aria-hidden="true"
           />
         </div>)}
+
+        {!doneRecipe && (
+        <div className="botoes-especiais">
+          <button
+            className="startRecipe"
+            data-testid="start-recipe-btn"
+            onClick={ () => history.push(`/${route}/${id}/in-progress`) }
+          >
+            {btnText}
+          </button>
+        </div>)}
+
     </div>
   );
 }

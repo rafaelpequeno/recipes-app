@@ -1,13 +1,24 @@
 .startRecipe {
   align-items: center;
-  background-color: transparent;
+  /* background-color: transparent; */
+  background-color: antiquewhite;
   border-radius: 10px;
   border-top: 1px solid rgb(138, 84, 40);
-  bottom: 0;
+  /* bottom: 0; */
   display: flex;
   height: 2.5rem;
   justify-content: center;
-  margin-left: 25%;
-  position: fixed;
+  /* margin-left: 25%; */
+  /* position: fixed; */
   width: 10em;
+}
+
+.botoes-especiais {
+  background-color: rgb(138, 84, 40);
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  flex-direction: row;
+  justify-content: center;
+  width: 100vw;
 }

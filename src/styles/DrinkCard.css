@@ -20,3 +20,12 @@
   margin-left: 5px;
   max-width: 157px;
 }
+
+/* IPAD 14.7.1 */
+
+@media screen and ( min-width : 1080px ) {
+
+  .drink-list {
+    margin-left: 10px;
+  }
+}
