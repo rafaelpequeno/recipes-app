@@ -1,8 +1,6 @@
 .meals-details {
   background-color: rgb(138, 84, 40);
   padding: 10px;
-  height: calc(100vh - 62px);
-  overflow: scroll;
 }
 
 .meals-details-header {

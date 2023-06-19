@@ -214,7 +214,7 @@ function RecipeDetails() {
           />
         </div>)}
 
-        {!doneRecipe && (
+      {!doneRecipe && (
         <div className="botoes-especiais">
           <button
             className="startRecipe"
