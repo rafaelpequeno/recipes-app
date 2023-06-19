@@ -1,19 +1,19 @@
+import clipboardCopy from 'clipboard-copy';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
-import filledHeart from '../images/blackHeartIcon.svg';
-import emptyHeart from '../images/whiteHeartIcon.svg';
-import myContext from '../context/myContext';
-import { fetchRecipeDetails } from '../services/fetchMealDetails';
-import '../styles/RecipeDetails.css';
-import '../styles/MealDetails.css';
-import '../styles/DrinkDetails.css';
-import '../styles/StartRecipeBTN.css';
-import { drinkAPI } from '../services/drinkAPI';
-import { mealAPI } from '../services/mealAPI';
-import YoutubeVideo from '../components/YoutubeVideo';
 import Carousel from '../components/Carousel';
+import YoutubeVideo from '../components/YoutubeVideo';
+import myContext from '../context/myContext';
+import filledHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+import emptyHeart from '../images/whiteHeartIcon.svg';
+import { drinkAPI } from '../services/drinkAPI';
+import { fetchRecipeDetails } from '../services/fetchMealDetails';
+import { mealAPI } from '../services/mealAPI';
+import '../styles/DrinkDetails.css';
+import '../styles/MealDetails.css';
+import '../styles/RecipeDetails.css';
+import '../styles/StartRecipeBTN.css';
 
 function RecipeDetails() {
   const {

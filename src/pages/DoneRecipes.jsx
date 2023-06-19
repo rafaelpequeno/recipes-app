@@ -38,7 +38,7 @@ function DoneRecipes() {
       <Header title="Done Recipes" />
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
       <div className="receitas">
-        {recipesDone
+        {recipesDone && recipesDone
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
             recipe.type === 'meal' ? (

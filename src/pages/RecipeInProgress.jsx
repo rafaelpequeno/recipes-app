@@ -1,6 +1,7 @@
 import clipboardCopy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { handleFavorite } from '../components/Favorite';
 import filledHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import emptyHeart from '../images/whiteHeartIcon.svg';
@@ -36,7 +37,6 @@ function RecipeInProgress() {
     return allIngredients.length === ingredientsCheck.length
       ? setFinishButtonDisabled(false) : setFinishButtonDisabled(true);
   };
-
   useEffect(() => {
     if (pathname.includes('/meals')) {
       const apiData = async () => {
@@ -84,10 +84,8 @@ function RecipeInProgress() {
             ...prevState,
             drinks: novoObjeto,
           };
-        });
-        setEmptyLocalStorage(false);
-      }
-      verifyIngredientsAllChecked();
+        }); setEmptyLocalStorage(false);
+      } verifyIngredientsAllChecked();
     }
   }, [ingredientChecked]);
   useEffect(() => {
@@ -124,28 +122,6 @@ function RecipeInProgress() {
     }, seconds);
     return () => clearTimeout(timer);
   };
-  const handleFavorite = () => {
-    const previewData = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    const mealOrDrinkFavorited = {
-      id: mealOrDrink.idMeal || mealOrDrink.idDrink,
-      type: pathname.includes('/meals') ? 'meal' : 'drink',
-      nationality: pathname.includes('/meals') ? mealOrDrink.strArea : '',
-      category: mealOrDrink.strCategory || '',
-      alcoholicOrNot: pathname.includes('/drinks') ? mealOrDrink.strAlcoholic : '',
-      name: mealOrDrink.strMeal || mealOrDrink.strDrink,
-      image: mealOrDrink.strMealThumb || mealOrDrink.strDrinkThumb,
-    };
-    if (!favoriteIcon) {
-      setFavoriteIcon(true);
-      return previewData === null
-        ? localStorage.setItem('favoriteRecipes', JSON.stringify([mealOrDrinkFavorited]))
-        : localStorage.setItem('favoriteRecipes', JSON
-          .stringify([...previewData, mealOrDrinkFavorited]));
-    }
-    setFavoriteIcon(false);
-    const removeFavorite = previewData.filter((recipe) => recipe.id !== id);
-    return localStorage.setItem('favoriteRecipes', JSON.stringify([...removeFavorite]));
-  };
   const handleClickFinish = () => {
     const dateNow = new Date();
     const doneRecipe = {
@@ -169,7 +145,6 @@ function RecipeInProgress() {
     <div>
       {mealOrDrink
         && (
-
           <div className="recipe-in-progress">
             <div className="recipe-in-progress-header">
               <img
@@ -191,11 +166,9 @@ function RecipeInProgress() {
             <p data-testid="recipe-category" className="recipe-in-progress-tag">
               { mealOrDrink.strAlcoholic || mealOrDrink.strCategory }
             </p>
-
             <div className="details-and-ingredients">
               <div className="recipe-in-progress-ingredients">
                 <h2 className="recipe-in-progress-h2-title">Ingredients</h2>
-
                 {Object.entries(mealOrDrink)
                   .filter(([key]) => key.startsWith('strIngredient') && mealOrDrink[key])
                   .map(([key, value], index) => {
@@ -204,9 +177,7 @@ function RecipeInProgress() {
                       ? '' : mealOrDrink[ingredientsKey];
                     const ingredientWithQuantity = `${quantity} ${value}`;
                     return (
-                      <div
-                        key={ key }
-                      >
+                      <div key={ key }>
                         <label
                           data-testid={ `${index}-ingredient-step` }
                           htmlFor={ `${index}-ingredient-step` }
@@ -217,14 +188,15 @@ function RecipeInProgress() {
                             type="checkbox"
                             id={ `${index}-ingredient-step` }
                             name={ `${index}-ingredient-step` }
-                            checked={ ingredientChecked[`${index}-ingredient-step`] || false }
+                            checked={ ingredientChecked[`${index}-ingredient-step`]
+                            || false }
                             onChange={ handleInputChange }
                           />
                           {ingredientWithQuantity}
                         </label>
                       </div>
-                   );
-                })}
+                    );
+                  })}
               </div>
               <div className="recipe-in-progress-instructions">
                 <h2 className="recipe-in-progress-h2-title">Instructions</h2>
@@ -246,7 +218,14 @@ function RecipeInProgress() {
               src={ favoriteIcon ? filledHeart : emptyHeart }
               alt="favorite Icon"
               data-testid="favorite-btn"
-              onClick={ () => handleFavorite() }
+              onClick={ () => {
+                const favoritsParameters = { mealOrDrink,
+                  pathname,
+                  favoriteIcon,
+                  setFavoriteIcon,
+                  id };
+                handleFavorite(favoritsParameters);
+              } }
               aria-hidden="true"
             />
           </div>
