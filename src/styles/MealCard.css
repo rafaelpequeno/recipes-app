@@ -3,7 +3,7 @@
   display: flex;
   flex-flow: wrap;
   flex-direction: row;
-  margin-left: 4px;
+  margin-left: 3px;
 }
 
 .recipe-meal-card {

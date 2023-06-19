@@ -2,3 +2,72 @@
   opacity: 0.5;
   text-decoration: line-through solid black;
 }
+
+.recipe-in-progress { 
+  background-color: rgb(138, 84, 40);
+  padding: 10px;
+}
+
+.recipe-in-progress-header {
+  align-items: center;
+  background-color: rgb(138, 84, 40);
+  display: flex;
+}
+
+.recipe-in-progress-picture {
+  border-radius: 8px;
+}
+
+.recipe-in-progress-title-area {
+  width: 100%;
+}
+
+.recipe-in-progress-title {
+  color: rgb(251, 251, 251);
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.recipe-in-progress-tag {
+  background-color: rgb(109, 115, 119);
+  border-radius: 9px;
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+.recipe-in-progress-ingredients {
+  background-color: rgb(163, 106, 60);
+  border-radius: 11px;
+  margin: 0 20px;
+  padding: 9px;
+}
+
+.recipe-in-progress-h2-title {
+  font-size: 19px;
+}
+
+.recipe-in-progress-instructions {
+  line-height: 1.3;
+  text-align: justify;
+}
+
+/* IPAD 14.7.1 */
+
+@media screen and ( min-width : 1080px ) {
+
+  .recipe-in-progress-title {
+    font-size: 35px;
+    line-height: 1.6;
+  }
+
+  .recipe-in-progress-ingredients {
+    flex: 30%;
+  }
+
+  .recipe-in-progress-instructions {
+    flex: 70%;
+    padding: 0 13px 0 11px;
+  }
+}

@@ -169,58 +169,69 @@ function RecipeInProgress() {
     <div>
       {mealOrDrink
         && (
-          <div>
-            <img
-              src={ mealOrDrink.strDrinkThumb || mealOrDrink.strMealThumb }
-              alt="Imagem da Receita"
-              width="150"
-              data-testid="recipe-photo"
-            />
-            <h1 data-testid="recipe-title">
-              { mealOrDrink.strDrink || mealOrDrink.strMeal }
-            </h1>
-            <p data-testid="recipe-category">
+
+          <div className="recipe-in-progress">
+            <div className="recipe-in-progress-header">
+              <img
+                src={ mealOrDrink.strDrinkThumb || mealOrDrink.strMealThumb }
+                alt="Imagem da Receita"
+                width="150"
+                data-testid="recipe-photo"
+                className="recipe-in-progress-picture"
+              />
+              <div className="recipe-in-progress-title-area">
+                <h1
+                  data-testid="recipe-title"
+                  className="recipe-in-progress-title"
+                >
+                  { mealOrDrink.strDrink || mealOrDrink.strMeal }
+                </h1>
+              </div>
+            </div>
+            <p data-testid="recipe-category" className="recipe-in-progress-tag">
               { mealOrDrink.strAlcoholic || mealOrDrink.strCategory }
             </p>
-            <h2>Ingredients</h2>
-            {Object.entries(mealOrDrink)
-              .filter(([key]) => key.startsWith('strIngredient') && mealOrDrink[key])
-              .map(([key, value], index) => {
-                const ingredientsKey = key.replace('strIngredient', 'strMeasure');
-                const quantity = mealOrDrink[ingredientsKey] === null
-                  ? '' : mealOrDrink[ingredientsKey];
-                const ingredientWithQuantity = `${quantity} ${value}`;
-                return (
-                  <div
-                    key={ key }
-                  >
-                    <label
-                      data-testid={ `${index}-ingredient-step` }
-                      htmlFor={ `${index}-ingredient-step` }
-                      className={ ingredientChecked[`${index}-ingredient-step`]
-                        ? 'ingredient-checked' : '' }
-                    >
-                      <input
-                        type="checkbox"
-                        id={ `${index}-ingredient-step` }
-                        name={ `${index}-ingredient-step` }
-                        checked={ ingredientChecked[`${index}-ingredient-step`] || false }
-                        onChange={ handleInputChange }
-                      />
-                      {ingredientWithQuantity}
-                    </label>
-                  </div>
-                );
-              })}
-            <p data-testid="instructions">{mealOrDrink.strInstructions}</p>
-            <button
-              className="startRecipe"
-              data-testid="finish-recipe-btn"
-              disabled={ finishButtonDisabled }
-              onClick={ () => handleClickFinish() }
-            >
-              Finish Recipe
-            </button>
+
+            <div className="details-and-ingredients">
+              <div className="recipe-in-progress-ingredients">
+                <h2 className="recipe-in-progress-h2-title">Ingredients</h2>
+
+                {Object.entries(mealOrDrink)
+                  .filter(([key]) => key.startsWith('strIngredient') && mealOrDrink[key])
+                  .map(([key, value], index) => {
+                    const ingredientsKey = key.replace('strIngredient', 'strMeasure');
+                    const quantity = mealOrDrink[ingredientsKey] === null
+                      ? '' : mealOrDrink[ingredientsKey];
+                    const ingredientWithQuantity = `${quantity} ${value}`;
+                    return (
+                      <div
+                        key={ key }
+                      >
+                        <label
+                          data-testid={ `${index}-ingredient-step` }
+                          htmlFor={ `${index}-ingredient-step` }
+                          className={ ingredientChecked[`${index}-ingredient-step`]
+                            ? 'ingredient-checked' : '' }
+                        >
+                          <input
+                            type="checkbox"
+                            id={ `${index}-ingredient-step` }
+                            name={ `${index}-ingredient-step` }
+                            checked={ ingredientChecked[`${index}-ingredient-step`] || false }
+                            onChange={ handleInputChange }
+                          />
+                          {ingredientWithQuantity}
+                        </label>
+                      </div>
+                   );
+                })}
+              </div>
+              <div className="recipe-in-progress-instructions">
+                <h2 className="recipe-in-progress-h2-title">Instructions</h2>
+                <p data-testid="instructions">{mealOrDrink.strInstructions}</p>
+              </div>
+            </div>
+
             <img
               src={ shareIcon }
               alt="Share button"
@@ -240,6 +251,16 @@ function RecipeInProgress() {
             />
           </div>
         )}
+      <div className="botoes-especiais">
+        <button
+          className="startRecipe"
+          data-testid="finish-recipe-btn"
+          disabled={ finishButtonDisabled }
+          onClick={ () => handleClickFinish() }
+        >
+          Finish Recipe
+        </button>
+      </div>
     </div>
   );
 }
