@@ -54,12 +54,21 @@ function RecipeDetails() {
   };
 
   const verifyBTNText = () => {
+    const txtStartRecipe = 'Start Recipe';
     const data = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const verification = data !== null
-      ? Object.entries(data.meals).some((e) => e[0] === id)
-      || Object.entries(data.drinks).some((e) => e[0] === id)
-      : false;
-    setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
+    if (data !== null) {
+      if (data.drinks && data.drinks.length !== null && data.drinks.length !== 0) {
+        const verification = Object.entries(data.drinks).some((e) => e[0] === id);
+        setBTNText(verification ? 'Continue Recipe' : txtStartRecipe);
+      } else {
+        const verification = Object.entries(data.meals).some((e) => e[0] === id);
+        setBTNText(verification ? 'Continue Recipe' : txtStartRecipe);
+      }
+    } else {
+      setBTNText(txtStartRecipe);
+    }
+    // const verification = data === null ? false : (Object.entries(data.meals).some((e) => e[0] === id) !== true) ? Object.entries(data.drinks).some((e) => e[0] === id) : true;
+    // setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
   };
 
   const verifyFavorite = () => {
