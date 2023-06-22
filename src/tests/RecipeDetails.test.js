@@ -1,36 +1,121 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import clipboardCopy from 'clipboard-copy';
 import App from '../App';
+import { mockDrinkDetailsGg } from '../helper/mockDrinkDetailsGg';
+import { mockDrinks } from '../helper/mockDrinks';
+import { mockMealDetailsSushi } from '../helper/mockMealDetailsSushi';
 import renderWithRouterAndContext from '../helper/renderWithRouterAndContext';
 
 jest.mock('clipboard-copy');
-
-describe('Tests the recipe details page', () => {
-  it('Should render meal details', async () => {
-    renderWithRouterAndContext(<App />, '/meals/53060');
-
-    await waitFor(() => {
-      screen.getByText(/burek/i);
-      screen.getByText(/side/i);
-      screen.getByText(/150g onion/i);
-      screen.getByTestId('instructions');
-      screen.getByTestId('video');
-
-      const view = screen.getByTestId('0-recommendation-card');
-
-      within(view).getByRole('img', {
-        name: /recipe thumb/i,
-      });
-
-      const shareBTN = screen.getByTestId('share-btn');
-
-      userEvent.click(shareBTN);
-
-      expect(clipboardCopy).toHaveBeenCalledTimes(1);
-      expect(clipboardCopy).toHaveBeenCalledWith('http://localhost:3000/meals/53060');
-
-    //   const favoriteBTN = screen.getByTestId('favorite-btn');
+const whiteHeart = 'whiteHeartIcon.svg';
+const blackHeart = 'blackHeartIcon.svg';
+describe('Testando pagina RecipeDetails para Meal', () => {
+  it('verifica se o button tem o titulo continue recipe', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockMealDetailsSushi),
     });
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: {}, meals: { 53065: ['0-ingredient-step', '1-ingredient-step'] } }));
+    renderWithRouterAndContext(<App />, '/meals/53065');
+
+    await screen.findByRole('button', { name: /continue recipe/i });
+
+    // screen.debug();
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it('verifica o button favoritar e compartilhar, e o button de start', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockMealDetailsSushi),
+    });
+
+    const { history } = renderWithRouterAndContext(<App />, '/meals/53065');
+
+    const shareBtn = await screen.findByTestId('share-btn');
+    const favoriteBtn = await screen.findByTestId('favorite-btn');
+
+    userEvent.click(shareBtn);
+    expect(clipboardCopy).toHaveBeenCalledWith('http://localhost:3000/meals/53065');
+    await waitForElementToBeRemoved(() => screen.getByText('Link copied!'), {
+      timeout: 3000, // Define o tempo limite em milissegundos
+      interval: 1000, // Define o intervalo de verificação em milissegundos
+    });
+
+    expect(favoriteBtn).toHaveAttribute('src', whiteHeart);
+    userEvent.click(favoriteBtn);
+    expect(favoriteBtn).toHaveAttribute('src', blackHeart);
+    userEvent.click(favoriteBtn);
+    expect(favoriteBtn).toHaveAttribute('src', whiteHeart);
+
+    const startRecipeBtn = await screen.findByTestId('start-recipe-btn');
+
+    userEvent.click(startRecipeBtn);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/meals/53065/in-progress');
+
+    // screen.debug();
+  });
+});
+
+describe('Testando pagina RecipeDetails para Drink', () => {
+  it('verifica se o button tem o titulo continue recipe', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinkDetailsGg),
+    });
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ drinks: { 15997: ['0-ingredient-step'] }, meals: {} }));
+    renderWithRouterAndContext(<App />, '/drinks/15997');
+
+    await screen.findByRole('button', { name: /continue recipe/i });
+
+    // screen.debug();
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it('verifica o button favoritar e compartilhar, e o button de start', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinks)
+        .mockResolvedValue(mockDrinkDetailsGg),
+    });
+
+    const { history } = renderWithRouterAndContext(<App />, '/drinks/15997');
+
+    const shareBtn = await screen.findByTestId('share-btn');
+    const favoriteBtn = await screen.findByTestId('favorite-btn');
+
+    userEvent.click(shareBtn);
+    expect(clipboardCopy).toHaveBeenCalledWith('http://localhost:3000/drinks/15997');
+    await waitForElementToBeRemoved(() => screen.getByText('Link copied!'), {
+      timeout: 3000, // Define o tempo limite em milissegundos
+      interval: 1000, // Define o intervalo de verificação em milissegundos
+    });
+
+    expect(favoriteBtn).toHaveAttribute('src', whiteHeart);
+    userEvent.click(favoriteBtn);
+    expect(favoriteBtn).toHaveAttribute('src', blackHeart);
+    userEvent.click(favoriteBtn);
+    expect(favoriteBtn).toHaveAttribute('src', whiteHeart);
+
+    const startRecipeBtn = await screen.findByTestId('start-recipe-btn');
+
+    userEvent.click(startRecipeBtn);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/drinks/15997/in-progress');
+
+    // screen.debug();
   });
 });

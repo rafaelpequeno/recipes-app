@@ -181,7 +181,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
       userEvent.click(execSearchBtn);
     });
     const { pathname } = history.location;
-    expect(expect(pathname).toBe('/drinks/12668'));
+    expect(pathname).toBe('/drinks/12668');
     // screen.debug();
   });
 

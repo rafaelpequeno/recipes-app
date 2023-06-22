@@ -14,7 +14,7 @@ describe('Testando componente Footer', () => {
   it('verifica se ao clicar na imagem DRINKS o usuario é redirecionado corretamente', () => {
     const { history } = renderWithRouterAndContext(<App />, '/profile');
     const imgDrinks = screen.getByTestId('drinks-bottom-btn');
-    screen.debug();
+    // screen.debug();
 
     userEvent.click(imgDrinks);
     const { pathname } = history.location;
@@ -28,6 +28,6 @@ describe('Testando componente Footer', () => {
     userEvent.click(imgMeals);
     const { pathname } = history.location;
     expect(pathname).toBe('/meals');
-    screen.debug();
+    // screen.debug();
   });
 });

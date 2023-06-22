@@ -1,10 +1,10 @@
+import clipboardCopy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import clipboardCopy from 'clipboard-copy';
 import FilterButtons from '../components/FilterButtons';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -21,7 +21,7 @@ function FavoriteRecipes() {
   };
 
   const handleFav = (id) => {
-    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id) || [];
+    const newFav = favoriteRecipes.filter((recipe) => recipe.id !== id);
     setFavoriteRecipes(newFav);
     localStorage.setItem('favoriteRecipes', JSON.stringify([...newFav]));
   };

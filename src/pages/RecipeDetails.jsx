@@ -55,8 +55,10 @@ function RecipeDetails() {
 
   const verifyBTNText = () => {
     const data = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const verification = data !== null ? Object.entries(data.meals || data.drinks)
-      .some((e) => e[0] === id) : false;
+    const verification = data !== null
+      ? Object.entries(data.meals).some((e) => e[0] === id)
+      || Object.entries(data.drinks).some((e) => e[0] === id)
+      : false;
     setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
   };
 
@@ -161,7 +163,8 @@ function RecipeDetails() {
                   .filter(([key]) => key.startsWith('strIngredient') && recipeData[key])
                   .map(([key, value], index) => {
                     const IngredientsKey = key.replace('strIngredient', 'strMeasure');
-                    const quantity = recipeData[IngredientsKey];
+                    const quantity = recipeData[IngredientsKey] === null
+                      ? '' : recipeData[IngredientsKey];
                     const ingredientWithQuantity = `${quantity} ${value}`;
                     return (
                       <li
