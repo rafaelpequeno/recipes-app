@@ -68,7 +68,7 @@ function RecipeDetails() {
       setBTNText(txtStartRecipe);
     }
     // const verification = data === null ? false : (Object.entries(data.meals).some((e) => e[0] === id) !== true) ? Object.entries(data.drinks).some((e) => e[0] === id) : true;
-    // setBTNText(verification ? 'Continue Recipe' : 'Start Recipe')
+    // setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
   };
 
   const verifyFavorite = () => {
