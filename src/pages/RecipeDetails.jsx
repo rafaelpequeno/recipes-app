@@ -54,10 +54,21 @@ function RecipeDetails() {
   };
 
   const verifyBTNText = () => {
+    const txtStartRecipe = 'Start Recipe';
     const data = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const verification = data !== null ? Object.entries(data.meals || data.drinks)
-      .some((e) => e[0] === id) : false;
-    setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
+    if (data !== null) {
+      if (data.drinks && data.drinks.length !== null && data.drinks.length !== 0) {
+        const verification = Object.entries(data.drinks).some((e) => e[0] === id);
+        setBTNText(verification ? 'Continue Recipe' : txtStartRecipe);
+      } else {
+        const verification = Object.entries(data.meals).some((e) => e[0] === id);
+        setBTNText(verification ? 'Continue Recipe' : txtStartRecipe);
+      }
+    } else {
+      setBTNText(txtStartRecipe);
+    }
+    // const verification = data === null ? false : (Object.entries(data.meals).some((e) => e[0] === id) !== true) ? Object.entries(data.drinks).some((e) => e[0] === id) : true;
+    // setBTNText(verification ? 'Continue Recipe' : 'Start Recipe');
   };
 
   const verifyFavorite = () => {
@@ -75,14 +86,17 @@ function RecipeDetails() {
   };
 
   useEffect(() => {
-    apiData();
     verifyBTNText();
     verifyFavorite();
     verifyRecipe();
     const routeData = pathname.match(/\/([^/]+)/)[1];
     setRoute(routeData);
     setTextToCopy(`http://localhost:3000/${route}/${id}`);
-  }, [id, route]);
+  }, [route]);
+
+  useEffect(() => {
+    apiData();
+  }, []);
 
   const handleCopy = () => {
     setCopyMessage(true);
@@ -161,7 +175,8 @@ function RecipeDetails() {
                   .filter(([key]) => key.startsWith('strIngredient') && recipeData[key])
                   .map(([key, value], index) => {
                     const IngredientsKey = key.replace('strIngredient', 'strMeasure');
-                    const quantity = recipeData[IngredientsKey];
+                    const quantity = recipeData[IngredientsKey] === null
+                      ? '' : recipeData[IngredientsKey];
                     const ingredientWithQuantity = `${quantity} ${value}`;
                     return (
                       <li
@@ -224,7 +239,6 @@ function RecipeDetails() {
             {btnText}
           </button>
         </div>)}
-
     </div>
   );
 }

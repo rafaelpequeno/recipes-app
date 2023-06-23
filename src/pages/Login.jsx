@@ -60,7 +60,7 @@ function Login() {
           type="button"
           data-testid="login-submit-btn"
           disabled={ buttonStatus }
-          onClick={ submitButton }
+          onClick={ () => submitButton() }
           className="login-item"
         >
           ENTER

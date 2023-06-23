@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import clipboardCopy from 'clipboard-copy';
+import React from 'react';
 import App from '../App';
 import renderWithRouterAndContext from '../helper/renderWithRouterAndContext';
 
@@ -111,6 +111,7 @@ describe('Testando a pagina FavoriteRecipes', () => {
     setTimeout(() => {
       expect(msg).not.toBeInTheDocument();
     }, 5000);
+    screen.debug();
   });
 
   it('Testa o filtro de drinks', () => {

@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import clipboardCopy from 'clipboard-copy';
+import React from 'react';
 import App from '../App';
 import renderWithRouterAndContext from '../helper/renderWithRouterAndContext';
 
@@ -87,7 +87,7 @@ describe('Testando a pagina DoneRecipes', () => {
   it('Testa a funcao de copiar com drinks', () => {
     renderWithRouterAndContext(<App />, url);
     const button = screen.getByTestId('1-horizontal-share-btn');
-    screen.debug();
+    // screen.debug();
     userEvent.click(button);
     expect(clipboardCopy).toHaveBeenCalledWith('http://localhost:3000/drinks/178319');
   });
@@ -95,10 +95,10 @@ describe('Testando a pagina DoneRecipes', () => {
   it('Testa a funcao de copiar com meals', () => {
     renderWithRouterAndContext(<App />, url);
     const button = screen.getByTestId('0-horizontal-share-btn');
-    screen.debug();
+
     userEvent.click(button);
-    const msg = screen.getByTestId('linkmsg');
-    expect(msg).toBeInTheDocument();
+    // screen.debug();
+    const msg = screen.getAllByText('Link copied!');
     expect(clipboardCopy).toHaveBeenCalledWith('http://localhost:3000/meals/52771');
     const timer = setTimeout(() => {
       expect(msg).not.toBeInTheDocument();
