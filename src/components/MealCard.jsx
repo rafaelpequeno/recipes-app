@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import myContext from '../context/myContext';
 import '../styles/MealCard.css';
@@ -6,7 +6,14 @@ import '../styles/MealCard.css';
 function MealCard() {
   const {
     filteredMeals,
+    requestMealAPI,
+    requestCategoryMealAPI,
   } = useContext(myContext);
+
+  useEffect(() => {
+    requestMealAPI();
+    requestCategoryMealAPI();
+  }, []);
 
   return (
     <section className="meal-list">

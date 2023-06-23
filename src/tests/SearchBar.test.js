@@ -21,9 +21,7 @@ describe('Testando componente SearchBar para MEALS', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockMealsCategories)
-        .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockMealsName),
     });
     const { history } = renderWithRouterAndContext(<App />, '/meals');
@@ -47,9 +45,7 @@ describe('Testando componente SearchBar para MEALS', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockMealsCategories)
-        .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockMealsIngradient),
     });
     renderWithRouterAndContext(<App />, '/meals');
@@ -76,9 +72,7 @@ describe('Testando componente SearchBar para MEALS', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockMealsCategories)
-        .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockMealsLetter),
     });
     global.alert = jest.fn().mockReturnValue('Your search must have only 1 (one) character');
@@ -105,9 +99,7 @@ describe('Testando componente SearchBar para MEALS', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockMealsCategories)
-        .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockMealsLetter),
     });
     renderWithRouterAndContext(<App />, '/meals');
@@ -134,9 +126,7 @@ describe('Testando componente SearchBar para MEALS', () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockMealsCategories)
-        .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue({ meals: null }),
     });
     global.alert = jest.fn().mockReturnValue('Sorry, we haven\'t found any recipes for these filters.');
@@ -163,9 +153,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
   it('verifica a pesquisa por nome e se redireciona para a pagina de detalhes caso seja apenas uma receita', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
-        .mockResolvedValueOnce(mockMealsCategories)
+      json: jest.fn().mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockDrinksName),
     });
@@ -189,9 +177,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
   it('verifica a pesquisa por ingrediente e se renderiza 12 receitas', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
-        .mockResolvedValueOnce(mockMealsCategories)
+      json: jest.fn().mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockDrinksIngredient),
     });
@@ -218,9 +204,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
   it('verifica a pesquisa por letra se tem mais de uma letra retorna um alert', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
-        .mockResolvedValueOnce(mockMealsCategories)
+      json: jest.fn().mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockDrinksLetter),
     });
@@ -247,9 +231,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
   it('verifica se a pesquisa por letra retorna as receitas', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
-        .mockResolvedValueOnce(mockMealsCategories)
+      json: jest.fn().mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue(mockDrinksLetter),
     });
@@ -276,9 +258,7 @@ describe('Testando componente SearchBar para DRINKS', () => {
   it('verifica se retorna um alert caso nao tenha o item da pesquisa', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValueOnce(mockMeals)
-        .mockResolvedValueOnce(mockDrinks)
-        .mockResolvedValueOnce(mockMealsCategories)
+      json: jest.fn().mockResolvedValueOnce(mockDrinks)
         .mockResolvedValueOnce(mockDrinksCategories)
         .mockResolvedValue({ drinks: null }),
     });

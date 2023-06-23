@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { drinkAPI } from '../services/drinkAPI';
 
 import { mealAPI } from '../services/mealAPI';
@@ -10,18 +10,13 @@ import mealCategoryAPI from '../services/mealCategoryAPI';
 
 function Provider({ children }) {
   const [mealRecipes, setMealRecipes] = useState([]);
-
   const [drinkRecipes, setDrinkRecipes] = useState([]);
-
   const [categoryMeal, setCategoryMeal] = useState([]);
   const [meal5Category, setMeal5Category] = useState([{}]);
-
   const [categoryDrink, setCategoryDrink] = useState([]);
   const [drink5Category, setDrink5Category] = useState([{}]);
-
   const [filteredMeals, setFilteredMeals] = useState([{}]);
   const [filteredDrinks, setFilteredDrinks] = useState([{}]);
-
   const [filterOnOff, setFilterOnOff] = useState(true);
 
   // mealDetails e drinkDetails
@@ -65,12 +60,12 @@ function Provider({ children }) {
     }
   };
 
-  useEffect(() => {
-    requestMealAPI();
-    requestDrinkAPI();
-    requestCategoryMealAPI();
-    requestCategoryDrinkAPI();
-  }, []);
+  // useEffect(() => {
+  //   requestMealAPI();
+  //   requestDrinkAPI();
+  //   requestCategoryMealAPI();
+  //   requestCategoryDrinkAPI();
+  // }, []);
 
   const states = useMemo(
     () => ({
@@ -103,6 +98,10 @@ function Provider({ children }) {
       setYoutubeLink,
       carouselData,
       setCarouselData,
+      requestMealAPI,
+      requestCategoryMealAPI,
+      requestDrinkAPI,
+      requestCategoryDrinkAPI,
     }),
     [
       mealRecipes,
@@ -134,6 +133,7 @@ function Provider({ children }) {
       setYoutubeLink,
       carouselData,
       setCarouselData,
+
     ],
   );
 

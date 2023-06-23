@@ -86,14 +86,17 @@ function RecipeDetails() {
   };
 
   useEffect(() => {
-    apiData();
     verifyBTNText();
     verifyFavorite();
     verifyRecipe();
     const routeData = pathname.match(/\/([^/]+)/)[1];
     setRoute(routeData);
     setTextToCopy(`http://localhost:3000/${route}/${id}`);
-  }, [id, route]);
+  }, [route]);
+
+  useEffect(() => {
+    apiData();
+  }, []);
 
   const handleCopy = () => {
     setCopyMessage(true);
@@ -236,7 +239,6 @@ function RecipeDetails() {
             {btnText}
           </button>
         </div>)}
-
     </div>
   );
 }
