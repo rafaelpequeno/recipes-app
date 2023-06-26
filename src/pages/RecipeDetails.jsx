@@ -92,7 +92,7 @@ function RecipeDetails() {
     const routeData = pathname.match(/\/([^/]+)/)[1];
     setRoute(routeData);
     setTextToCopy(`http://localhost:3000/${route}/${id}`);
-  }, [route]);
+  }, [id, route, btnText]);
 
   useEffect(() => {
     apiData();
@@ -203,9 +203,8 @@ function RecipeDetails() {
           </div>
 
           {youtubetLink && <YoutubeVideo />}
-          {carouselData && (
-            <Carousel />
-          )}
+
+          {carouselData && <Carousel />}
 
           <img
             src={ shareIcon }
