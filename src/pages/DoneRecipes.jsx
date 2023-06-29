@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import FilterButtons from '../components/FilterButtons';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+import '../styles/DoneRecipes.css';
+import Footer from '../components/Footer';
 
 function DoneRecipes() {
   const [recipesDone, setRecipesDone] = useState([]);
@@ -33,17 +35,30 @@ function DoneRecipes() {
     }, seconds);
   };
 
+  const handledate = (date) => {
+    const transformDate = new Date(date);
+
+    const day = transformDate.getDate();
+    const month = transformDate.getMonth();
+    const fullYear = transformDate.getFullYear();
+
+    return `${month}/${day}/${fullYear}`;
+  };
+
   return (
-    <div>
+    <div className="done-recipes-page">
       <Header title="Done Recipes" />
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
+      <span className="link-copied">
+        {showCopy && <p data-testid="linkmsg">Link copied!</p>}
+      </span>
       <div className="receitas">
         {recipesDone && recipesDone
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
             recipe.type === 'meal' ? (
               // ----------MEAL CARD---------------
-              <div key={ index }>
+              <div key={ index } className="done-recipe-card">
                 <Link
                   to={ `/meals/${recipe.id}` }
                 >
@@ -52,37 +67,48 @@ function DoneRecipes() {
                     src={ recipe.image }
                     alt="imgreceita"
                     aria-hidden="true"
-                    width="100"
-                    style={ { padding: '5px', display: 'flex' } }
+                    className="done-recipe-thumb"
                   />
-                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
-                <p data-testid={ `${index}-horizontal-top-text` }>
-                  {`${recipe.nationality} - ${recipe.category}`}
-                </p>
-                <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-                {recipe.tags.slice(0, 2).map((tag, indexTag) => (
-                  <p
-                    data-testid={ `${index}-${tag}-horizontal-tag` }
-                    key={ indexTag }
-                  >
-                    {tag}
+                {!showCopy && (
+                  <span className="done-share-icon">
+                    <img
+                      src={ shareIcon }
+                      alt="compartilhar"
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      onClick={ () => handleCopy('meals', recipe.id) }
+                      aria-hidden="true"
+                    />
+                  </span>
+                )}
+                <span className="done-meal-name-and-country">
+                  <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    {`${recipe.nationality} - ${recipe.category}`}
                   </p>
-                ))}
-                <img
-                  src={ shareIcon }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => handleCopy('meals', recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
-                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
+                </span>
+                <span>
+                  <p
+                    data-testid={ `${index}-horizontal-done-date` }
+                    className="done-meal-date"
+                  >
+                    {`Done in ${handledate(recipe.doneDate)}`}
+                  </p>
+                </span>
+                <span className="done-meal-tags">
+                  {recipe.tags.slice(0, 2).map((tag, indexTag) => (
+                    <p
+                      data-testid={ `${index}-${tag}-horizontal-tag` }
+                      key={ indexTag }
+                    >
+                      {tag}
+                    </p>
+                  ))}
+                </span>
               </div>
             ) : (
               // ----------DRINK CARD---------------
-              <div key={ index }>
+              <div key={ index } className="done-recipe-card">
                 <Link
                   to={ `/drinks/${recipe.id}` }
                 >
@@ -91,31 +117,39 @@ function DoneRecipes() {
                     src={ recipe.image }
                     alt="imgreceita"
                     aria-hidden="true"
-                    width="100"
-                    style={ { padding: '5px', display: 'flex' } }
+                    className="done-recipe-thumb"
                   />
-                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
+                {!showCopy && (
+                  <img
+                    className="done-share-icon"
+                    src={ shareIcon }
+                    alt="compartilhar"
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    onClick={ () => handleCopy('drinks', recipe.id) }
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="done-meal-name-and-country">
+                  <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+                  <p
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
+                    {recipe.alcoholicOrNot}
+                  </p>
+                </span>
                 <p
-                  data-testid={ `${index}-horizontal-top-text` }
+                  data-testid={ `${index}-horizontal-done-date` }
+                  className="done-meal-date"
                 >
-                  {recipe.alcoholicOrNot}
+                  {`Done in ${handledate(recipe.doneDate)}`}
+
                 </p>
-                <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-                <img
-                  src={ shareIcon }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => handleCopy('drinks', recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
-                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
               </div>
             )
           ))}
       </div>
+      <Footer />
     </div>
   );
 }

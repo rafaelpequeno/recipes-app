@@ -206,29 +206,28 @@ function RecipeDetails() {
 
           {carouselData && <Carousel />}
 
-          <img
-            src={ shareIcon }
-            alt="Share button"
-            data-testid="share-btn"
-            onClick={ () => handleCopy() }
-            aria-hidden="true"
-            width="50"
-            // style só está aqui pois outros elementos ficam a frente dele e não passa no avaliador ao fazer css pode ser removido
-            style={ { padding: '5px', display: 'flex' } }
-          />
+          {CopyMessage && <span className="copy-message">Link copied!</span>}
 
-          {CopyMessage && <span style={ { display: 'flex' } }>Link copied!</span>}
+          <span className="fav-and-share">
+            <img
+              src={ shareIcon }
+              alt="Share button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy() }
+              aria-hidden="true"
+            />
 
-          <img
-            src={ favoriteIcon ? filledHeart : emptyHeart }
-            alt="favorite Icon"
-            data-testid="favorite-btn"
-            onClick={ () => handleFavorite() }
-            aria-hidden="true"
-          />
+            <img
+              src={ favoriteIcon ? filledHeart : emptyHeart }
+              alt="favorite Icon"
+              data-testid="favorite-btn"
+              onClick={ () => handleFavorite() }
+              aria-hidden="true"
+            />
+          </span>
         </div>)}
 
-      {!doneRecipe && (
+      {!doneRecipe && !CopyMessage && (
         <div className="botoes-especiais">
           <button
             className="startRecipe"

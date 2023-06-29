@@ -1,5 +1,5 @@
 import clipboardCopy from 'clipboard-copy';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { handleFavorite } from '../components/Favorite';
 import filledHeart from '../images/blackHeartIcon.svg';
@@ -8,8 +8,12 @@ import emptyHeart from '../images/whiteHeartIcon.svg';
 import { fetchRecipeDetails } from '../services/fetchMealDetails';
 import '../styles/RecipeInProgress.css';
 import '../styles/StartRecipeBTN.css';
+import YoutubeVideo from '../components/YoutubeVideo';
+import myContext from '../context/myContext';
 
 function RecipeInProgress() {
+  const { youtubetLink } = useContext(myContext);
+
   const [mealOrDrink, setMealOrDrink] = useState();
   const [ingredientChecked, setIngredientChecked] = useState({});
   const [emptyLocalStorage, setEmptyLocalStorage] = useState(true);
@@ -198,44 +202,47 @@ function RecipeInProgress() {
             <div className="recipe-in-progress-instructions">
               <h2 className="recipe-in-progress-h2-title">Instructions</h2>
               <p data-testid="instructions">{mealOrDrink.strInstructions}</p>
+              {youtubetLink && <YoutubeVideo />}
             </div>
           </div>
-          <img
-            src={ shareIcon }
-            alt="Share button"
-            data-testid="share-btn"
-            onClick={ () => handleCopy() }
-            aria-hidden="true"
-            width="50"
-            style={ { padding: '5px', display: 'flex' } }
-          />
-          {CopyMessage && <span>Link copied!</span>}
-          <img
-            src={ favoriteIcon ? filledHeart : emptyHeart }
-            alt="favorite Icon"
-            data-testid="favorite-btn"
-            onClick={ () => {
-              const favoritsParameters = { mealOrDrink,
-                pathname,
-                favoriteIcon,
-                setFavoriteIcon,
-                id };
-              handleFavorite(favoritsParameters);
-            } }
-            aria-hidden="true"
-          />
+          <span className="fav-and-share">
+            <img
+              src={ shareIcon }
+              alt="Share button"
+              data-testid="share-btn"
+              onClick={ () => handleCopy() }
+              aria-hidden="true"
+            />
+            {CopyMessage && <span className="copy-message">Link copied!</span>}
+            <img
+              src={ favoriteIcon ? filledHeart : emptyHeart }
+              alt="favorite Icon"
+              data-testid="favorite-btn"
+              onClick={ () => {
+                const favoritsParameters = { mealOrDrink,
+                  pathname,
+                  favoriteIcon,
+                  setFavoriteIcon,
+                  id };
+                handleFavorite(favoritsParameters);
+              } }
+              aria-hidden="true"
+            />
+          </span>
         </div>
       )}
-      <div className="botoes-especiais">
-        <button
-          className="startRecipe"
-          data-testid="finish-recipe-btn"
-          disabled={ finishButtonDisabled }
-          onClick={ () => handleClickFinish() }
-        >
-          Finish Recipe
-        </button>
-      </div>
+      {!CopyMessage && (
+        <div className="botoes-especiais">
+          <button
+            className="startRecipe"
+            data-testid="finish-recipe-btn"
+            disabled={ finishButtonDisabled }
+            onClick={ () => handleClickFinish() }
+          >
+            Finish Recipe
+          </button>
+        </div>
+      )}
     </div>
   );
 }

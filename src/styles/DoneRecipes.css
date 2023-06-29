@@ -1,0 +1,88 @@
+.filter-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-buttons img {
+  width: 3rem;
+}
+
+.filter-buttons label {
+  font-size: 0.5rem;
+  text-align: center;
+  width: 3rem;
+}
+
+.all-svg {
+  filter: grayscale(100%);
+}
+
+.done-recipe-card {
+  border: 1px solid grey;
+  border-radius: 5px;
+  height: 8rem;
+  margin: 1rem;
+  width: 90%;
+}
+
+.done-recipe-thumb {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  width: 8rem;
+}
+
+.done-meal-name-and-country {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  margin-left: 9rem;
+  margin-top: -9rem;
+}
+
+.done-meal-name-and-country p {
+  font-size: small;
+  margin-top: -1rem;
+}
+
+.done-meal-date {
+  font-size: small;
+  margin-left: 9rem;
+}
+
+.done-meal-tags {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  margin-left: 9rem;
+}
+
+.done-share-icon {
+  float: right;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.done-share-icon img {
+  width: 1.5rem;
+}
+
+.link-copied {
+  background-color: rgb(110, 28, 8);
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  font-size: medium;
+  font-weight: 600;
+  justify-content: center;
+  margin-left: 40%;
+  margin-top: 45%;
+  position: fixed;
+  width: 6rem;
+}
+
+.done-recipes-page {
+  margin-bottom: 3rem;
+}
