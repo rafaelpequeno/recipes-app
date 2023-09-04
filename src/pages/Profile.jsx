@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import doneLogo from '../images/Group 10.svg';
 import favLogo from '../images/Group 9.svg';
-import logoutLogo from '../images/Group 10.svg';
+import logoutLogo from '../images/Group 8.svg';
 import '../styles/Profile.css';
 
 function Profile() {
