@@ -1,0 +1,17 @@
+p {
+  display: flex;
+  font-weight: 600;
+  justify-content: center;
+}
+
+.profile-buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-buttons img {
+  height: 3rem;
+  margin-bottom: 2rem;
+  width: 3rem;
+}

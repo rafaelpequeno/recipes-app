@@ -63,6 +63,23 @@
   margin: 0 13px;
 }
 
+.fav-and-share {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.copy-message {
+  display: flex;
+  float: initial;
+  font-size: medium;
+  font-weight: 600;
+  justify-content: center;
+  margin: 1em;
+  padding: 1em;
+}
+
 /* IPAD 14.7.1 */
 
 @media screen and ( min-width : 1080px ) {

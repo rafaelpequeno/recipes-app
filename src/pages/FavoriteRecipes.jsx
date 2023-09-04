@@ -5,6 +5,8 @@ import FilterButtons from '../components/FilterButtons';
 import Header from '../components/Header';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import Footer from '../components/Footer';
+import '../styles/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -38,16 +40,17 @@ function FavoriteRecipes() {
   };
 
   return (
-    <div>
+    <div className="done-recipes-page">
       <Header title="Favorite Recipes" />
       <FilterButtons onClick={ ({ target: { name } }) => filterByCategory(name) } />
       <div className="favReceitas">
+        {showCopy && <p className="link-copied">Link copied!</p>}
         {favoriteRecipes
           .filter((recipe) => (recipe.type.includes(selectedCategory)))
           .map((recipe, index) => (
             recipe.type === 'meal' ? (
             // ----------MEAL CARD---------------
-              <div key={ index }>
+              <div key={ index } className="done-recipe-card">
                 <Link
                   to={ `/meals/${recipe.id}` }
                 >
@@ -56,37 +59,36 @@ function FavoriteRecipes() {
                     src={ recipe.image }
                     alt="imgreceita"
                     aria-hidden="true"
-                    width="100"
-                    style={ { padding: '5px', display: 'flex' } }
+                    className="done-recipe-thumb"
                   />
-                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
-                <p data-testid={ `${index}-horizontal-top-text` }>
-                  {`${recipe.nationality} - ${recipe.category}`}
-                </p>
-                <img
-                  src={ shareIcon }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => handleCopy('meals', recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
-                {showCopy && <p data-testid="linkmsg">Link copied!</p>}
-                <img
-                  src={ blackHeart }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  onClick={ () => handleFav(recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
+                <span className="done-meal-name-and-country">
+                  <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+                  <p data-testid={ `${index}-horizontal-top-text` }>
+                    {`${recipe.nationality} - ${recipe.category}`}
+                  </p>
+                </span>
+                <span className="fav-recipes-icons">
+                  {!showCopy && (
+                    <img
+                      src={ shareIcon }
+                      alt="compartilhar"
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      onClick={ () => handleCopy('meals', recipe.id) }
+                      aria-hidden="true"
+                    />)}
+                  <img
+                    src={ blackHeart }
+                    alt="compartilhar"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    onClick={ () => handleFav(recipe.id) }
+                    aria-hidden="true"
+                  />
+                </span>
               </div>
             ) : (
             // ----------DRINK CARD---------------
-              <div key={ index }>
+              <div key={ index } className="done-recipe-card">
                 <Link
                   to={ `/drinks/${recipe.id}` }
                 >
@@ -95,39 +97,39 @@ function FavoriteRecipes() {
                     src={ recipe.image }
                     alt="imgreceita"
                     aria-hidden="true"
-                    width="100"
-                    style={ { padding: '5px', display: 'flex' } }
+                    className="done-recipe-thumb"
                   />
-                  <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
                 </Link>
-                <p
-                  data-testid={ `${index}-horizontal-top-text` }
-                >
-                  {recipe.alcoholicOrNot}
-                </p>
-                <img
-                  src={ shareIcon }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  onClick={ () => handleCopy('drinks', recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
-                {showCopy && <p>Link copied!</p>}
-                <img
-                  src={ blackHeart }
-                  alt="compartilhar"
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  onClick={ () => handleFav(recipe.id) }
-                  aria-hidden="true"
-                  width="50"
-                  style={ { padding: '5px', display: 'flex' } }
-                />
+                <span className="done-meal-name-and-country">
+                  <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
+                  <p
+                    data-testid={ `${index}-horizontal-top-text` }
+                  >
+                    {recipe.alcoholicOrNot}
+                  </p>
+                </span>
+                <span className="fav-recipes-icons">
+                  {!showCopy && (
+                    <img
+                      src={ shareIcon }
+                      alt="compartilhar"
+                      data-testid={ `${index}-horizontal-share-btn` }
+                      onClick={ () => handleCopy('drinks', recipe.id) }
+                      aria-hidden="true"
+                    />)}
+                  <img
+                    src={ blackHeart }
+                    alt="compartilhar"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
+                    onClick={ () => handleFav(recipe.id) }
+                    aria-hidden="true"
+                  />
+                </span>
               </div>
             )
           ))}
       </div>
+      <Footer />
     </div>
   );
 }
